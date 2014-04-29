@@ -14,7 +14,7 @@ import org.apache.wink.json4j.JSONObject;
 
 //This class define the /hello RESTful API to fetch all system environment information.
 
-//@Path("/hello")
+@Path("/hello")
 public class HelloResource extends HttpServlet {
     static Stations caStations = null;
 
@@ -31,8 +31,9 @@ public class HelloResource extends HttpServlet {
                 if (caStations.isInitDone()) {
                     out.println("Init is done." + caStations.initProgress() + " Trying to dump DB<p>");
                     out.println("Init Progress: " + caStations.initProgress() + " URL: " + caStations.debugString() + "<p>");
-                    caStations.dumpDBEntries(out);
-                    StationHistory.dumpStationHistoryDB(caStations, out);
+                    //caStations.dumpDBEntries(out);
+                    caStations.getStationsInJSON(out);
+                    //StationHistory.dumpStationHistoryDB(caStations, out);
                     /*
                     ArrayList<StationHistory> sh =
                         StationHistory.getStationHistory(caStations, "ANT", 

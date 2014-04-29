@@ -6,6 +6,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.mongodb.*;
+import org.apache.wink.json4j.JSONObject;
+import org.apache.wink.json4j.JSONArray;
+//import org.json.simple.JSONObject;
 //import org.cloudfoundry.runtime.env.*;
 
 public class Stations {
@@ -355,6 +358,36 @@ public class Stations {
             }
         }
 
+        return "Not Found";
+    }
+
+    public String getStationsInJSON(PrintWriter out)
+    {
+        DB db;
+        db = this.mongo.getDB("db");
+        DBCollection stationTable = db.getCollection("stations");
+        DBCursor cursor = stationTable.find();
+        JSONArray arr=new JSONArray();
+
+        try {
+            while(cursor.hasNext()) {
+                JSONObject obj=new JSONObject();
+                DBObject o = cursor.next();
+                obj.put("id", (String)o.get("id"));
+                String lat    = (String) o.get("latitude");
+                String lon    = (String) o.get("longitude");
+                obj.put("lat", new Double(Station.googleLatitude(lat)));
+                obj.put("lon", new Double(Station.googleLongitude(lon)));
+                arr.add(obj);
+            }
+            String jsonText = arr.toString();
+            out.println("<p>" + jsonText);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            cursor.close();
+        }
         return "Not Found";
     }
 }
