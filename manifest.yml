@@ -1,0 +1,10 @@
+applications:
+- services:
+  - mongodb-1j
+  host: h2o
+  disk: 1024M
+  name: h2o
+  path: webStarterApp.war
+  domain: ng.bluemix.net
+  mem: 512M
+  instances: 1
