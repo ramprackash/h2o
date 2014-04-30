@@ -88,7 +88,7 @@ public class HelloResource extends HttpServlet {
         out.println("<TABLE BORDER=\"2\" CELLPADDING=\"2\">");
         out.println("    <TR><TD WIDTH=\"275\" ALIGN=\"center\">");
         out.println("            Pressing the button will dump the list of reservoirs that are present in the stations table of MongoDB");
-        out.println("            <FORM METHOD=\"POST\" ACTION=\"station\"> ");
+        out.println("            <FORM METHOD=\"POST\" ACTION=\"HelloResource\"> ");
         //out.println("            <INPUT TYPE=\"TEXT\" NAME=\"DATA\" SIZE=30> ");
         out.println("                <P> ");
         //out.println("                <INPUT TYPE=\"SUBMIT\" VALUE=\"Add this note\">");
