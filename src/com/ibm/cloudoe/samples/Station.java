@@ -412,4 +412,25 @@ public class Station implements Runnable {
 
     }
 
+    public String getStationInJSON()
+    {
+        /*
+        System.out.println("id = " + this.id);
+        System.out.println("dam= " + this.dam);
+        System.out.println("lake= " + this.lake);
+        System.out.println("stream= " + this.stream);
+        System.out.println("capacity= " + this.capacity);
+        System.out.println("elevation= " + this.elevInFeet);
+        System.out.println("county= " + this.county);
+        System.out.println("river= " + this.riverBasin);
+        System.out.println("latitude= " + this.latitude);
+        System.out.println("longitude= " + this.longitude);
+        */
+        String s;
+        s = "id = " + this.id + "dam= " + this.dam + "lake= " + this.lake + "stream= ";
+        return s;
+
+    }
+
+
 }

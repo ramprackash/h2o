@@ -7,6 +7,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.mongodb.*;
+import org.apache.wink.json4j.JSONObject;
+import org.apache.wink.json4j.JSONArray;
 
 //public class StationHistory implements Runnable {
 public class StationHistory {
@@ -174,5 +176,73 @@ public class StationHistory {
         } finally {
             cursor.close();
         }
+    }
+
+    // if id==0, then dump all records
+    // if id==valid && year==0 dump all years for id
+    // if id==valid && year==valid dump all months for id & year
+    // if id==valid && year==valid && month==valid dump the exact record
+    public static String getStationHistoryInJSON(Stations stns, 
+            String id,
+            String year,
+            String month,
+            PrintWriter out) {
+
+        DB db;
+        db = stns.mongo().getDB("db");
+        DBCollection stationHistTable = db.getCollection("stationHistory");
+        BasicDBObject doc = new BasicDBObject();
+        BasicDBObject q   = new BasicDBObject();
+        JSONArray arr = new JSONArray();
+        String jsonText = null;
+
+        // query
+        if (id != null) {
+            q.put("id", id);
+        }
+        if (year != null) {
+            q.put("year", year);
+        }
+        if (month != null) {
+            q.put("month", month);
+        }
+
+        DBCursor c = stationHistTable.find(q);
+        ArrayList<StationHistory> arrayOfStnHist = 
+            new ArrayList<StationHistory>();
+        try {
+            while (c.hasNext()) {
+                DBObject o = c.next();
+                StationHistory sh = new StationHistory();
+                JSONObject obj = new JSONObject();
+                sh.id = (String)o.get("id");
+                sh.year = (String)o.get("year");
+                sh.month = (String)o.get("month");
+                sh.level = (String)o.get("level");
+                obj.put("id", new String(sh.id));
+                obj.put("year", new String(sh.year));
+                //obj.put("level", Double.parseDouble(sh.level));
+                if (sh.level.matches("[0-9]+") && sh.level.length() >= 1) {
+                    obj.put("level", Double.parseDouble(sh.level));
+                } else {
+                    continue;
+                }
+                arr.add(obj);
+                arrayOfStnHist.add(sh);
+            } 
+            jsonText = arr.toString();
+            out.println(jsonText);
+        }
+        catch (NumberFormatException e ) {
+            out.println("Numberformat exception");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            c.close();
+        }
+
+        return jsonText;
     }
 }

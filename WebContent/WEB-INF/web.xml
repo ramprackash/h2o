@@ -23,7 +23,7 @@
 	</servlet-mapping>
         <servlet-mapping>
                 <servlet-name>HelloResource</servlet-name>
-                <url-pattern>/HelloResource</url-pattern>
+                <url-pattern>/station/*</url-pattern>
         </servlet-mapping>
         <welcome-file-list>
                 <welcome-file>/index.html</welcome-file>

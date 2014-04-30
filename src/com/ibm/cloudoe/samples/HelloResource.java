@@ -14,7 +14,7 @@ import org.apache.wink.json4j.JSONObject;
 
 //This class define the /hello RESTful API to fetch all system environment information.
 
-@Path("/hello")
+//@Path("/hello")
 public class HelloResource extends HttpServlet {
     static Stations caStations = null;
 
@@ -32,19 +32,17 @@ public class HelloResource extends HttpServlet {
                     out.println("Init is done." + caStations.initProgress() + " Trying to dump DB<p>");
                     out.println("Init Progress: " + caStations.initProgress() + " URL: " + caStations.debugString() + "<p>");
                     //caStations.dumpDBEntries(out);
-                    caStations.getStationsInJSON(out);
-                    //StationHistory.dumpStationHistoryDB(caStations, out);
-                    /*
-                    ArrayList<StationHistory> sh =
-                        StationHistory.getStationHistory(caStations, "ANT", 
-                                                         "2009", "02");
-                    for (StationHistory st : sh) {
-                        out.println("Id: " + st.id() +
-                                    " Year: " + st.year() +
-                                    " Month: " + st.month() +
-                                    " Level: " + st.level() + "<p>");
-                    }
-                    */
+                    //caStations.getStationsInJSON(out);
+
+                    String sh = StationHistory.getStationHistoryInJSON(caStations, "ANT", null, null, out);
+                        out.println("<p>Returned " + sh + "<p>");
+                        ArrayList<StationHistory> sha = StationHistory.getStationHistory(caStations,
+                                    "ANT", "null", "null");
+                        for (StationHistory st : sha) {
+                            out.println("Id: " + st.id() + " Year: " + st.year() + " Month: " + st.month() + " Level: " + st.level() + "<p>");
+                        }
+
+                    StationHistory.dumpStationHistoryDB(caStations, out);
                 }
                 else {
                     out.println("Database still being populated <p>");
@@ -90,7 +88,7 @@ public class HelloResource extends HttpServlet {
         out.println("<TABLE BORDER=\"2\" CELLPADDING=\"2\">");
         out.println("    <TR><TD WIDTH=\"275\" ALIGN=\"center\">");
         out.println("            Pressing the button will dump the list of reservoirs that are present in the stations table of MongoDB");
-        out.println("            <FORM METHOD=\"POST\" ACTION=\"HelloResource\"> ");
+        out.println("            <FORM METHOD=\"POST\" ACTION=\"station\"> ");
         //out.println("            <INPUT TYPE=\"TEXT\" NAME=\"DATA\" SIZE=30> ");
         out.println("                <P> ");
         //out.println("                <INPUT TYPE=\"SUBMIT\" VALUE=\"Add this note\">");
