@@ -1,4 +1,11 @@
 package com.ibm.cloudoe.samples; 
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+
 import java.io.*;
 import java.util.*;
 import org.jsoup.Jsoup;
@@ -11,7 +18,10 @@ import org.apache.wink.json4j.JSONArray;
 //import org.json.simple.JSONObject;
 //import org.cloudfoundry.runtime.env.*;
 
-public class Stations {
+@Path(value="/stations")
+public class Stations extends HttpServlet {
+
+    static Stations caStations = null;
 
     ArrayList<Station> stationArray;
     private int initStatus;
@@ -131,7 +141,7 @@ public class Stations {
         }
     }
 
-    public void initStations(String state, boolean forceRefresh)
+    public void initStations(String state, boolean forceRefresh, PrintWriter out)
     {
         String all_stations_url;
         String connURL;
@@ -143,6 +153,7 @@ public class Stations {
         if (this.initStatus == 0)
             this.initStatus = 1;
 
+        out.println("InitStatus " + this.initStatus);
         try {
             connURL = getServiceURI();
             this.mongo = new MongoClient(new MongoClientURI(connURL));
@@ -361,13 +372,44 @@ public class Stations {
         return "Not Found";
     }
 
+    @GET
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException
+    {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        if (caStations == null) {
+            caStations = new Stations();
+            caStations.initStations("CA", false, out);
+        }
+        String st = caStations.getStationsInJSON(out);
+        out.write(st);
+        //out.println(st);
+        out.close();
+    }
+
+
     public String getStationsInJSON(PrintWriter out)
     {
-        DB db;
-        db = this.mongo.getDB("db");
+        DB db = null;
+        try {
+            if (this.mongo != null) {
+                db = this.mongo.getDB("db");
+            } else {
+                out.println("mongo is null. Initializing it now"); 
+                String connURL = getServiceURI();
+                this.mongo = new MongoClient(new MongoClientURI(connURL));
+                db = this.mongo.getDB("db");
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         DBCollection stationTable = db.getCollection("stations");
         DBCursor cursor = stationTable.find();
         JSONArray arr=new JSONArray();
+        String jsonText = null;
 
         try {
             while(cursor.hasNext()) {
@@ -380,14 +422,13 @@ public class Stations {
                 obj.put("lon", new Double(Station.googleLongitude(lon)));
                 arr.add(obj);
             }
-            String jsonText = arr.toString();
-            out.println("<p>" + jsonText);
+            jsonText = arr.toString();
         } 
         catch (Exception e) {
             e.printStackTrace();
         }finally {
             cursor.close();
         }
-        return "Not Found";
+        return jsonText;
     }
 }

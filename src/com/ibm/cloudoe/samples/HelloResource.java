@@ -14,7 +14,7 @@ import org.apache.wink.json4j.JSONObject;
 
 //This class define the /hello RESTful API to fetch all system environment information.
 
-//@Path("/hello")
+//@Path(value="/stations")
 public class HelloResource extends HttpServlet {
     static Stations caStations = null;
 
@@ -88,7 +88,7 @@ public class HelloResource extends HttpServlet {
         out.println("<TABLE BORDER=\"2\" CELLPADDING=\"2\">");
         out.println("    <TR><TD WIDTH=\"275\" ALIGN=\"center\">");
         out.println("            Pressing the button will dump the list of reservoirs that are present in the stations table of MongoDB");
-        out.println("            <FORM METHOD=\"POST\" ACTION=\"station\"> ");
+        out.println("            <FORM METHOD=\"POST\" ACTION=\"HelloResource\"> ");
         //out.println("            <INPUT TYPE=\"TEXT\" NAME=\"DATA\" SIZE=30> ");
         out.println("                <P> ");
         //out.println("                <INPUT TYPE=\"SUBMIT\" VALUE=\"Add this note\">");
@@ -102,11 +102,11 @@ public class HelloResource extends HttpServlet {
         //out.println(selectAllFromDB(out));
         out.println("</TABLE> </center>");
         out.println("</body> </html>");
-        out.close();
         if (caStations == null) {
             caStations = new Stations();
-            caStations.initStations("CA", false);
+            caStations.initStations("CA", false, out);
         }
+        out.close();
     }
 
 

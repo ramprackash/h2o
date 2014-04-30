@@ -20,11 +20,9 @@
        <li><a href="#">Home</a></li>
        <li><a href="#">About</a></li>
        <li><a href="#">Maps</a></li>
-       <li><a href="#">Contact</a></li>
+       <li><a href="#" id="stations">Contact</a></li>
     </ul>  
   </nav>
-
-
 
 
 
@@ -39,6 +37,24 @@
 	 Team 20 (CMPE-272)
     
 </div>
+
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
+
+  <script>
+      $('#stations').click(function(){
+          $.getJSON('/stations', function(data) {
+              var table = $('<table>').appendTo($('#content'));
+              $.each(data, function(i, stn) {
+                  var row = $('<tr>').appendTo(table);
+                  $('<td>').text(stn.id).appendTo(row);
+                  $('<td>').text(stn.lat).appendTo(row);
+                  $('<td>').text(stn.lon).appendTo(row);
+              });
+          });
+          return false;
+      });
+  </script>
+
 
     
 </body>
