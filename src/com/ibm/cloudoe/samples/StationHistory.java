@@ -221,6 +221,7 @@ public class StationHistory {
                 sh.level = (String)o.get("level");
                 obj.put("id", new String(sh.id));
                 obj.put("year", new String(sh.year));
+                obj.put("month", new String(sh.month));
                 //obj.put("level", Double.parseDouble(sh.level));
                 if (sh.level.matches("[0-9]+") && sh.level.length() >= 1) {
                     obj.put("level", Double.parseDouble(sh.level));
