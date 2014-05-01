@@ -5,22 +5,29 @@
         <style type="text/css">
             html { height: 100% }
             body { height: 100%; margin: 0; padding: 0 }
-            #map-canvas { height: 80%; margin-left: 120px; margin-right: 120px; }
-            #map-canvas img{max-width: none}
+            #map_canvas { height: 80%; margin-left: 120px; margin-right: 120px; margin-bottom:120px}
+            #map_canvas img{max-width: none}
+            #myfooter { height: 10% }
             #myheader { height: 10% }
             #mymenu { height: 10% }
+            #chart_canvas {max-width:100%}
         </style>
-        <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false">
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false">
         </script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
         <script type="text/javascript">
+
+            // Load visualization
+            google.load('visualization', '1.0', {'packages':['corechart']});
+            //google.setOnLoadCallback(initialize);
+
             function initialize() {
                 var mapOptions = {
                     center: new google.maps.LatLng(39.33300018310547,-120.25), zoom: 7
                 };
                 var map = new
-                    google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                    google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
                 var infowindow = new google.maps.InfoWindow({
                     content: "Hello World"
@@ -38,15 +45,22 @@
                             var id = marker.getTitle();
                             var resturl = '/stationhistory?id='+id;
                             $.getJSON(resturl, function(data) {
-                                var contentString =
-                                '<table><tr><td>ID<td>year<td>month<td>level<td>';
+
+                                var dataTable = new google.visualization.DataTable();
+                                dataTable.addColumn('string', 'Year/Month');
+                                dataTable.addColumn('number', 'Water Level');
                                 for (var i = 0; i < data.length; i++) {
-                                contentString = contentString + '<tr><td>'+data[i].id;
-                                contentString = contentString + '<td>'+data[i].year;
-                                contentString = contentString + '<td>'+data[i].month;
-                                contentString = contentString + '<td>'+data[i].level;
+                                    dataTable.addRow([data[i].month+' '+data[i].year, data[i].level]);
                                 }
-                                infowindow.setContent(contentString);
+
+                                var options = {'title': 'Water Table over 10 years for '+id};
+                                var node = document.createElement('div');
+                                node.id = 'chart_canvas';
+                                var chart = new google.visualization.ColumnChart(node);
+                                chart.draw(dataTable, options);
+                                //chart.setOption('title', 'Water Table History for Station '+id);
+
+                                infowindow.setContent(node);
                                 infowindow.open(map, marker);
                             });
                         });
@@ -70,12 +84,10 @@
             </ul>  
             </nav>
 	</div>
-        <div id="map-canvas"/>
-            <!--
-	<div id="footer">
+        <div id="map_canvas"/>
+	<div id="myfooter">
 	 Team 20 (CMPE-272)
         </div>
-        -->
 <!--
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
 
