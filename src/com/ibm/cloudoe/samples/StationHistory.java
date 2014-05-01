@@ -10,8 +10,14 @@ import com.mongodb.*;
 import org.apache.wink.json4j.JSONObject;
 import org.apache.wink.json4j.JSONArray;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
 //public class StationHistory implements Runnable {
-public class StationHistory {
+@Path(value="/stationhistory")
+public class StationHistory extends HttpServlet {
     // Gathers historical data for a station using
     // http://cdec.water.ca.gov/cgi-progs/queryMonthly?<id>&d=<date in dd-Mon-yyyy+hh:mm>&span=10years
     // ex: http://cdec.water.ca.gov/cgi-progs/queryMonthly?APN&d=16-Apr-2014+18:17&span=10years
@@ -176,8 +182,25 @@ public class StationHistory {
         } finally {
             cursor.close();
         }
+    } 
+    
+    @GET
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        Stations stns = Stations.getStationsObject();
+        response.setContentType("text/html");
+        String id = request.getParameter("id");
+        String year = request.getParameter("year");
+        String month = request.getParameter("month");
+        PrintWriter out = response.getWriter();
+        if (stns == null) {
+            stns = new Stations();
+            stns.initStations("CA", false, out);
+        }
+        String sh = StationHistory.getStationHistoryInJSON(stns, id, year, month, out);
+        out.write(sh);
+        out.close();
     }
-
     // if id==0, then dump all records
     // if id==valid && year==0 dump all years for id
     // if id==valid && year==valid dump all months for id & year
@@ -232,7 +255,6 @@ public class StationHistory {
                 arrayOfStnHist.add(sh);
             } 
             jsonText = arr.toString();
-            out.println(jsonText);
         }
         catch (NumberFormatException e ) {
             out.println("Numberformat exception");

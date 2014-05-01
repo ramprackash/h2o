@@ -18,6 +18,10 @@
         <servlet-class>com.ibm.cloudoe.samples.Stations</servlet-class>
 </servlet>
 <servlet>
+        <servlet-name>StationHistory</servlet-name>
+        <servlet-class>com.ibm.cloudoe.samples.StationHistory</servlet-class>
+</servlet>
+<servlet>
         <servlet-name>HelloResource</servlet-name>
         <servlet-class>com.ibm.cloudoe.samples.HelloResource</servlet-class>
 </servlet>
@@ -32,6 +36,10 @@
         <servlet-mapping>
                 <servlet-name>Stations</servlet-name>
                 <url-pattern>/stations</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+                <servlet-name>StationHistory</servlet-name>
+                <url-pattern>/stationhistory</url-pattern>
         </servlet-mapping>
         <welcome-file-list>
                 <welcome-file>/index.html</welcome-file>

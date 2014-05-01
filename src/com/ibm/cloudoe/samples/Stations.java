@@ -60,6 +60,10 @@ public class Stations extends HttpServlet {
         return 0;
     }
     */
+    public static Stations getStationsObject()
+    {
+        return caStations;
+    }
     public MongoClient mongo()
     {
         return(this.mongo);
