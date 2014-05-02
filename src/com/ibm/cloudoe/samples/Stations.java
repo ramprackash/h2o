@@ -419,19 +419,50 @@ public class Stations extends HttpServlet {
             while(cursor.hasNext()) {
                 JSONObject obj=new JSONObject();
                 DBObject o = cursor.next();
-                obj.put("id", (String)o.get("id"));
                 String lat    = (String) o.get("latitude");
                 String lon    = (String) o.get("longitude");
-                obj.put("lat", new Double(Station.googleLatitude(lat)));
-                obj.put("lon", new Double(Station.googleLongitude(lon)));
-                arr.add(obj);
+                Double lt = new Double(Station.googleLatitude(lat));
+                Double ln = new Double(Station.googleLongitude(lon));
+                int donotadd = 0;
+                if (lt == 0.0 || ln == 0.0) {
+                    // skip adding unknown reservoirs
+                    donotadd = 1;
+                } else {
+                    // If there is no historical data for a reservoir, skip
+                    // adding that to the map too. No use showing it...
+                    ArrayList<StationHistory> sha = 
+                        StationHistory.getStationHistory(caStations, 
+                                (String)o.get("id"), null, null);
+                    int count = 0;
+                    for (StationHistory st : sha) {
+                        count++;
+                        if (new Double(st.level()) != 0) {
+                            donotadd = 0;
+                            break;
+                        }
+                    }
+                    if (count == sha.size()) {
+                        donotadd = 1;
+                    }
+                }
+                if (donotadd == 0) {
+                    obj.put("id", (String)o.get("id"));
+                    obj.put("lat", lt);
+                    obj.put("lon", ln);
+                    arr.add(obj);
+                } else {
+                }
             }
             jsonText = arr.toString();
-        } 
+        }
         catch (Exception e) {
             e.printStackTrace();
         }finally {
             cursor.close();
+        }
+        if (jsonText == null) {
+            // Catchall - if nothing, return empty json array
+            return "[]";
         }
         return jsonText;
     }

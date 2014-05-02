@@ -156,7 +156,11 @@ public class StationHistory extends HttpServlet {
                 sh.year = (String)o.get("year");
                 sh.month = (String)o.get("month");
                 sh.level = (String)o.get("level");
-                arrayOfStnHist.add(sh);
+                if (sh.level.matches("[0-9]+") && sh.level.length() >= 1) {
+                    arrayOfStnHist.add(sh);
+                } else {
+                    continue;
+                }
             } 
         } finally {
             c.close();
