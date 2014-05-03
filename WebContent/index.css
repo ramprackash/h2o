@@ -1,54 +1,77 @@
-#header {
-	
-    height: 120px;
-	margin-left: auto ;
-  	margin-right: auto ;
-	display: block;
-	
-}
-
-#menu {
-	
+html {
     height: 100%;
-    margin-bottom: 30px;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    adding: 0;
+    background-image: url(IMG/background.png);
+}
+
+#myheader {
+    height: 10%;
+}
+
+
+#mymenu {
+    height: 10%;
+	margin-bottom: 30px;
 	text-align:center;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	
 }
 
-#mapwindow{
-	
-	height: auto;
-	margin-left: auto ;
-    margin-right: auto ;
-	text-align:center;
-	
-	
-		
-	
+
+
+/* implementation of the map */
+#map_canvas {
+    height: 60%;
+    margin-left: 120px;
+    margin-right: 120px;
+    margin-bottom: 120px;
 }
 
-body{
-	
-	background-image:url(IMG/background.png);
-	
+#map_canvas img {
+    max-width: none;
 }
 
+#chart_canvas {
+    max-width: 100%;
+}
 
-#footer {
-	
-    height: 30px;
-	width: 100%;
+#mapwindow {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#myfooter {
+ 	height: 30px;
+    width: 100%;
     position: absolute;
-    bottom: 0px;
-	left: 0px;
-	text-align:center;
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	
-	
-	
-	
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* implementation of the menubar */
 

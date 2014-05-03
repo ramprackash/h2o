@@ -2,18 +2,9 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="index.css">
-        <style type="text/css">
-            html { height: 100% }
-            body { height: 100%; margin: 0; padding: 0 }
-            #map_canvas { height: 80%; margin-left: 120px; margin-right: 120px; margin-bottom:120px}
-            #map_canvas img{max-width: none}
-            #myfooter { height: 10% }
-            #myheader { height: 10% }
-            #mymenu { height: 10% }
-            #chart_canvas {max-width:100%}
-        </style>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false">
-        </script>
+        <link type="text/javascript" href="index.js">
+        
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false" ></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
         <script type="text/javascript">
@@ -26,6 +17,7 @@
                 var mapOptions = {
                     center: new google.maps.LatLng(39.33300018310547,-120.25), zoom: 7
                 };
+                
                 var map = new
                     google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
@@ -67,45 +59,44 @@
                     });
                 });
             }
-            google.maps.event.addDomListener(window, 'load', initialize);
+            
+			google.maps.event.addDomListener(window, 'load', initialize);
+            
+            
+            function dbRefresh() {
+                alert("The refresh will take upto eight minutes. Please be patient. Thank you");
+            }
+        
         </script>
 
     </head>
 
     <body>
+    
+  		
         <div id="myheader">  <center> <img src="IMG/logo1.png" width="150" height="100" /> </center></div>
+        
         <div id="mymenu">
-            <nav id="navigation" style="width: 320px; margin: 5px auto 0;">
+            <nav id="navigation" style="width: 420px; margin: 5px auto 0;">
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Maps</a></li>
                 <li><a href="#" id="stations">Contact</a></li>
-            </ul>  
+                <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB Refresh</a></li>
+                
+                
+                
+                            </ul>  
             </nav>
 	</div>
-        <div id="map_canvas"/>
+        <div id="map_canvas"></div>
 	<div id="myfooter">
 	 Team 20 (CMPE-272)
         </div>
-<!--
-  <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
+        
+        
 
-  <script>
-      $('#stations').click(function(){
-          $.getJSON('/stations', function(data) {
-              var table = $('<table>').appendTo($('#mapwindow'));
-              $.each(data, function(i, stn) {
-                  var row = $('<tr>').appendTo(table);
-                  $('<td>').text(stn.id).appendTo(row);
-                  $('<td>').text(stn.lat).appendTo(row);
-                  $('<td>').text(stn.lon).appendTo(row);
-              });
-          });
-          return false;
-      });
-  </script>
-  -->
 
 
     
