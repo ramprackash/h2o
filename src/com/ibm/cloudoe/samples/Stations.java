@@ -449,6 +449,18 @@ public class Stations extends HttpServlet {
                     obj.put("id", (String)o.get("id"));
                     obj.put("lat", lt);
                     obj.put("lon", ln);
+                    obj.put("Jan", o.get("avgJan"));
+                    obj.put("Feb", o.get("avgFeb"));
+                    obj.put("Mar", o.get("avgMar"));
+                    obj.put("Apr", o.get("avgApr"));
+                    obj.put("May", o.get("avgMay"));
+                    obj.put("Jun", o.get("avgJun"));
+                    obj.put("Jul", o.get("avgJul"));
+                    obj.put("Aug", o.get("avgAug"));
+                    obj.put("Sep", o.get("avgSep"));
+                    obj.put("Oct", o.get("avgOct"));
+                    obj.put("Nov", o.get("avgNov"));
+                    obj.put("Dec", o.get("avgDec"));
                     arr.add(obj);
                 } else {
                 }

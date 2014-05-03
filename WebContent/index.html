@@ -2,16 +2,6 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="index.css">
-        <style type="text/css">
-            html { height: 100% }
-            body { height: 100%; margin: 0; padding: 0 }
-            #map_canvas { height: 80%; margin-left: 120px; margin-right: 120px; margin-bottom:120px}
-            #map_canvas img{max-width: none}
-            #myfooter { height: 10% }
-            #myheader { height: 10% }
-            #mymenu { height: 10% }
-            #chart_canvas {max-width:100%}
-        </style>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false">
         </script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -49,16 +39,79 @@
                                 var dataTable = new google.visualization.DataTable();
                                 dataTable.addColumn('string', 'Year/Month');
                                 dataTable.addColumn('number', 'Water Level');
+                                dataTable.addColumn({'type':'string', 'role':'tooltip', 'p': {'html':true}});
                                 for (var i = 0; i < data.length; i++) {
-                                    dataTable.addRow([data[i].month+' '+data[i].year, data[i].level]);
+                                //dataTable.addRow([data[i].month+' '+data[i].year, data[i].level]);
+                                    if (data[i].month == "Jan") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jan: </b>'+stn.Jan]);
+                                    }
+                                    if (data[i].month == "Feb") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Feb: </b>'+stn.Feb]);
+                                    }
+                                    if (data[i].month == "Mar") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Mar: </b>'+stn.Mar]);
+                                    }
+                                    if (data[i].month == "Apr") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Apr: </b>'+stn.Apr]);
+                                    }
+                                    if (data[i].month == "May") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for May: </b>'+stn.May]);
+                                    }
+                                    if (data[i].month == "Jun") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jun: </b>'+stn.Jun]);
+                                    }
+                                    if (data[i].month == "Jul") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jul: </b>'+stn.Jul]);
+                                    }
+                                    if (data[i].month == "Aug") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Aug: </b>'+stn.Aug]);
+                                    }
+                                    if (data[i].month == "Sep") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Sep: </b>'+stn.Sep]);
+                                    }
+                                    if (data[i].month == "Oct") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Oct: </b>'+stn.Oct]);
+                                    }
+                                    if (data[i].month == "Nov") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Nov: </b>'+stn.Nov]);
+                                    }
+                                    if (data[i].month == "Dec") {
+                                        dataTable.addRow([data[i].month+' '+data[i].year, 
+                                            data[i].level, 
+                                            '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Dec: </b>'+stn.Dec]);
+                                    }
                                 }
 
-                                var options = {'title': 'Water Table over 10 years for '+id};
+                                var options = {'title': 'Water Table over 10 years for '+id,
+                                    'tooltip': {isHtml: true}, 
+                                    'legend': 'none'
+                                };
                                 var node = document.createElement('div');
                                 node.id = 'chart_canvas';
                                 var chart = new google.visualization.ColumnChart(node);
                                 chart.draw(dataTable, options);
-                                //chart.setOption('title', 'Water Table History for Station '+id);
 
                                 infowindow.setContent(node);
                                 infowindow.open(map, marker);
@@ -84,30 +137,9 @@
             </ul>  
             </nav>
 	</div>
-        <div id="map_canvas"/>
+        <div id="map_canvas"> </div>
 	<div id="myfooter">
 	 Team 20 (CMPE-272)
         </div>
-<!--
-  <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
-
-  <script>
-      $('#stations').click(function(){
-          $.getJSON('/stations', function(data) {
-              var table = $('<table>').appendTo($('#mapwindow'));
-              $.each(data, function(i, stn) {
-                  var row = $('<tr>').appendTo(table);
-                  $('<td>').text(stn.id).appendTo(row);
-                  $('<td>').text(stn.lat).appendTo(row);
-                  $('<td>').text(stn.lon).appendTo(row);
-              });
-          });
-          return false;
-      });
-  </script>
-  -->
-
-
-    
-</body>
+    </body>
 </html>

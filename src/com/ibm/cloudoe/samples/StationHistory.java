@@ -244,7 +244,44 @@ public class StationHistory extends HttpServlet {
                 JSONObject obj = new JSONObject();
                 sh.id = (String)o.get("id");
                 sh.year = (String)o.get("year");
-                sh.month = (String)o.get("month");
+                switch((String)o.get("month")) {
+                    case "01":
+                        sh.month = "Jan";
+                        break;
+                    case "02":
+                        sh.month = "Feb";
+                        break;
+                    case "03":
+                        sh.month = "Mar";
+                        break;
+                    case "04":
+                        sh.month = "Apr";
+                        break;
+                    case "05":
+                        sh.month = "May";
+                        break;
+                    case "06":
+                        sh.month = "Jun";
+                        break;
+                    case "07":
+                        sh.month = "Jul";
+                        break;
+                    case "08":
+                        sh.month = "Aug";
+                        break;
+                    case "09":
+                        sh.month = "Sep";
+                        break;
+                    case "10":
+                        sh.month = "Oct";
+                        break;
+                    case "11":
+                        sh.month = "Nov";
+                        break;
+                    case "12":
+                        sh.month = "Dec";
+                        break;
+                }
                 sh.level = (String)o.get("level");
                 obj.put("id", new String(sh.id));
                 obj.put("year", new String(sh.year));

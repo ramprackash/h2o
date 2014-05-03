@@ -29,24 +29,24 @@ public class HelloResource extends HttpServlet {
         if (button != null) {
             if (caStations != null) {
                 if (caStations.isInitDone()) {
-                    out.println("Init is done." + caStations.initProgress() + " Trying to dump DB<p>");
-                    out.println("Init Progress: " + caStations.initProgress() + " URL: " + caStations.debugString() + "<p>");
-                    //caStations.dumpDBEntries(out);
+                    out.println("Database fetch is complete." + caStations.initProgress() + " Trying to dump DB<p>");
+                    //out.println("Init Progress: " + caStations.initProgress() + " URL: " + caStations.debugString() + "<p>");
+                    caStations.dumpDBEntries(out);
                     //caStations.getStationsInJSON(out);
 
-                    String sh = StationHistory.getStationHistoryInJSON(caStations, "ANT", null, null, out);
-                        out.println("<p>Returned " + sh + "<p>");
-                        ArrayList<StationHistory> sha = StationHistory.getStationHistory(caStations,
-                                    "ANT", "null", "null");
-                        for (StationHistory st : sha) {
-                            out.println("Id: " + st.id() + " Year: " + st.year() + " Month: " + st.month() + " Level: " + st.level() + "<p>");
-                        }
+                    //String sh = StationHistory.getStationHistoryInJSON(caStations, null, null, null, out);
+                     //   out.println("<p>Returned " + sh + "<p>");
+                        //ArrayList<StationHistory> sha = StationHistory.getStationHistory(caStations,
+                        //            "ANT", "null", "null");
+                        //for (StationHistory st : sha) {
+                        //    out.println("Id: " + st.id() + " Year: " + st.year() + " Month: " + st.month() + " Level: " + st.level() + "<p>");
+                        //}
 
                     StationHistory.dumpStationHistoryDB(caStations, out);
                 }
                 else {
                     out.println("Database still being populated <p>");
-                    out.println("Init Progress: " + caStations.initProgress() + " URL: " + caStations.debugString() + "<p>");
+                    out.println("Progress: " + caStations.initProgress() + " URL: " + caStations.debugString() + "<p>");
                 }
             }
         } else {
@@ -87,12 +87,12 @@ public class HelloResource extends HttpServlet {
 
         out.println("<TABLE BORDER=\"2\" CELLPADDING=\"2\">");
         out.println("    <TR><TD WIDTH=\"275\" ALIGN=\"center\">");
-        out.println("            Pressing the button will dump the list of reservoirs that are present in the stations table of MongoDB");
+        out.println("            Pressing the button will fetch the list of reservoirs from the CDEC website and create the stations table of MongoDB<p><p> !!WARNING: This operation can take up to 10 minutes!!");
         out.println("            <FORM METHOD=\"POST\" ACTION=\"HelloResource\"> ");
         //out.println("            <INPUT TYPE=\"TEXT\" NAME=\"DATA\" SIZE=30> ");
         out.println("                <P> ");
         //out.println("                <INPUT TYPE=\"SUBMIT\" VALUE=\"Add this note\">");
-        out.println("                <INPUT TYPE=\"SUBMIT\" NAME=\"RESET\" VALUE=\"List all reservoir stations\">");
+        out.println("                <INPUT TYPE=\"SUBMIT\" NAME=\"RESET\" VALUE=\"List all reservoir stations in CA\">");
         out.println("            </FORM> ");
         out.println("    </TD></TR> ");
         out.println("</TABLE>");
@@ -104,7 +104,7 @@ public class HelloResource extends HttpServlet {
         out.println("</body> </html>");
         if (caStations == null) {
             caStations = new Stations();
-            caStations.initStations("CA", false, out);
+            caStations.initStations("CA", true, out);
         }
         out.close();
     }
