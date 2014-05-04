@@ -30,36 +30,6 @@ public class Stations extends HttpServlet {
     private String state;
     private MongoClient mongo;
 
-    /*
-    public static void main(String[] args) 
-    {
-        System.out.println("Getting station info");
-        Stations caStations = initStations("CA");
-        System.out.println("Done getting station info");
-        if (caStations == null) {
-            System.out.println("Error retrieving Station Info");
-        }
-        for (Station st : caStations.stationArray) {
-            if (st.isStationId("KLM")) {
-                st.dumpStation();
-            }
-        }
-    }
-
-    private static int getStationsCount(String all_stations_url) {
-        try {
-            Document doc = Jsoup.connect(all_stations_url).get();
-            Elements tableElements = doc.select("table");
-            Elements tableRowElements = 
-                tableElements.select(":not(thead) tr");
-            return tableRowElements.size();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-    */
     public static Stations getStationsObject()
     {
         return caStations;
@@ -408,10 +378,8 @@ public class Stations extends HttpServlet {
                 JSONObject obj1=new JSONObject();
 
                 if (caStations == null) {
-                    out.write("{caStations : NULL}");
-                    return;
-                    //caStations = new Stations();
-                    //caStations.initStations("CA", false, out);
+                    caStations = new Stations();
+                    caStations.initStations("CA", false, out);
                 }
 
                 obj1.put("initstatus", new Double(caStations.initStatus));

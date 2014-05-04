@@ -1,63 +1,147 @@
-// index.js
-// request environment variables on server
-xhrGet("/api/hello", function(responseText) {
-    // retrieve data
-    var data = parseJson(responseText);
-    // build environment variable table
-    var table = ['<table border="0" cellspacing="0" cellpadding="0">', '<thead><tr><th class="env-var">Name</th><th>Value</th></tr></thead>', '<tbody>'];
-    for (var name in data) {
-        var val = data[name];
-        table.push("<tr><td class='env-var'>", name, "</td><td><pre>",
-        // if the environment variable is JSON, print it in a prettier format
-        /^{/.test(val) ? prettyJson(val) : val, "</pre></td></tr>");
-    }
-    table.push('</tbody></table>');
-    // add to document
-    var div = document.createElement('div');
-    div.innerHTML = table.join('');
-    document.body.appendChild(div.firstChild);
-}, function(err) {
-    console.log(err);
-});
-//utilities
 
-function createXHR() {
-    if (typeof XMLHttpRequest != 'undefined') {
-        return new XMLHttpRequest();
-    } else {
-        try {
-            return new ActiveXObject('Msxml2.XMLHTTP');
-        } catch (e) {
-            try {
-                return new ActiveXObject('Microsoft.XMLHTTP');
-            } catch (e) {}
-        }
+function dbRefresh() {
+
+    var x;
+    var r=confirm("The database refresh may take up to eight minutes. Thank you for your patience.");
+    if (r==true)
+    {
+        $.getJSON('/stations?initdb=1', function(data) { });
+        window.localStorage.setItem("testinit" , "1");
+        x = "DB Refresh";
     }
-    return null;
+    else
+    {
+        x = "DB Refresh";
+    }
+    document.getElementById("dbrefresh").innerHTML=x;
+
 }
 
-function xhrGet(url, callback, errback) {
-    var xhr = new createXHR();
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                callback(xhr.responseText);
-            } else {
-                errback('service not available');
+function markerchartinfo(map, marker, stn, id, data) {
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('string', 'Year/Month');
+        dataTable.addColumn('number', 'Water Level');
+        dataTable.addColumn({'type':'string', 'role':'tooltip', 'p': {'html':true}});
+        for (var i = 0; i < data.length; i++) {
+            //dataTable.addRow([data[i].month+' '+data[i].year, data[i].level]);
+            if (data[i].month == "Jan") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                    data[i].level, 
+                    '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jan: </b>'+stn.Jan]);
+            }
+            if (data[i].month == "Feb") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                    data[i].level, 
+                    '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Feb: </b>'+stn.Feb]);
+            }
+            if (data[i].month == "Mar") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                    data[i].level, 
+                    '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Mar: </b>'+stn.Mar]);
+            }
+            if (data[i].month == "Apr") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Apr: </b>'+stn.Apr]);
+            }
+            if (data[i].month == "May") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for May: </b>'+stn.May]);
+            }
+            if (data[i].month == "Jun") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jun: </b>'+stn.Jun]);
+            }
+            if (data[i].month == "Jul") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jul: </b>'+stn.Jul]);
+            }
+            if (data[i].month == "Aug") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Aug: </b>'+stn.Aug]);
+            }
+            if (data[i].month == "Sep") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Sep: </b>'+stn.Sep]);
+            }
+            if (data[i].month == "Oct") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Oct: </b>'+stn.Oct]);
+            }
+            if (data[i].month == "Nov") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Nov: </b>'+stn.Nov]);
+            }
+            if (data[i].month == "Dec") {
+                dataTable.addRow([data[i].month+' '+data[i].year, 
+                        data[i].level, 
+                        '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Dec: </b>'+stn.Dec]);
             }
         }
+
+        var options = {'title': 'Water Table over 10 years for '+id,
+            'tooltip': {isHtml: true}, 
+            'legend': 'none'
+        };
+        var node = document.createElement('div');
+        node.id = 'chart_canvas';
+        var chart = new google.visualization.ColumnChart(node);
+        chart.draw(dataTable, options);
+
+        var infowindow = new google.maps.InfoWindow({
+            // Just an initializer. Actual content initialized below
+            content: "Hello World"
+        });
+        infowindow.setContent(node);
+        infowindow.open(map, marker);
+}
+
+function markeraction(map, marker, stn) {
+    var id = marker.getTitle();
+    var resturl = '/stationhistory?id='+id;
+    $.getJSON(resturl, function(data) {
+
+        markerchartinfo(map, marker, stn, id, data);
+
+    });
+}
+                
+function initialize() {
+    if (window.localStorage.getItem("testinit") == "1") {
+        $.getJSON('/stations?initstatus=1', function(data) {
+            if (data.initstatus < 2) {
+                alert("Database being refreshed. Comeback after a jog!  "+data.initstatus+" "+data.progress+" "+data.url);
+                return;
+            } else {
+                window.localStorage.setItem("testinit", "0");
+            }
+        });
+    }
+
+    var mapOptions = {
+        center: new google.maps.LatLng(39.33300018310547,-120.25), 
+        zoom: 7
     };
-    xhr.timeout = 3000;
-    xhr.ontimeout = errback;
-    xhr.send();
-}
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
 
-function parseJson(str) {
-    return window.JSON ? JSON.parse(str) : eval('(' + str + ')');
-}
+    $.getJSON('/stations', function(data) {
+        $.each(data, function(i, stn) {
+            var myLatLng = new google.maps.LatLng(stn.lat, stn.lon);
+            var marker = new google.maps.Marker({
+                position: myLatLng, map: map, title: stn.id
+            });
 
-function prettyJson(str) {
-    // If browser does not have JSON utilities, just print the raw string value.
-    return window.JSON ? JSON.stringify(JSON.parse(str), null, '  ') : str;
+            google.maps.event.addListener(marker, 'click', function() {
+                markeraction (map, marker, stn);
+            });
+        });
+    });
 }
