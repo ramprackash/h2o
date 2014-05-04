@@ -20,21 +20,22 @@ function dbRefresh() {
 function markerchartinfo(map, marker, stn, id, data) {
         var dataTable = new google.visualization.DataTable();
         dataTable.addColumn('string', 'Year/Month');
-        dataTable.addColumn('number', 'Water Level');
+        dataTable.addColumn('number', '> Monthly Avg');
         dataTable.addColumn({'type':'string', 'role':'tooltip', 'p': {'html':true}});
         dataTable.addColumn({'type':'string', 'role':'style'});
+        dataTable.addColumn('number', '< Monthly Avg');
         for (var i = 0; i < data.length; i++) {
             if (data[i].month == "Jan") {
                 if (data[i].level < parseFloat(stn.Jan)) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jan: </b>'+stn.Jan,
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jan: </b>'+stn.Jan,
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Feb") {
@@ -42,12 +43,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Feb: </b>'+stn.Feb,
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Feb: </b>'+stn.Feb, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Mar") {
@@ -55,12 +56,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Mar: </b>'+stn.Mar, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Mar: </b>'+stn.Mar, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Apr") {
@@ -68,12 +69,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Apr: </b>'+stn.Apr, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Apr: </b>'+stn.Apr, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "May") {
@@ -81,12 +82,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for May: </b>'+stn.May, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for May: </b>'+stn.May, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Jun") {
@@ -94,12 +95,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jun: </b>'+stn.Jun, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jun: </b>'+stn.Jun, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Jul") {
@@ -107,12 +108,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jul: </b>'+stn.Jul, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Jul: </b>'+stn.Jul, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Aug") {
@@ -120,12 +121,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Aug: </b>'+stn.Aug, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Aug: </b>'+stn.Aug, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Sep") {
@@ -133,12 +134,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Sep: </b>'+stn.Sep, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Sep: </b>'+stn.Sep, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Oct") {
@@ -146,12 +147,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Oct: </b>'+stn.Oct, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Oct: </b>'+stn.Oct, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Nov") {
@@ -159,12 +160,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Nov: </b>'+stn.Nov, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Nov: </b>'+stn.Nov, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
             if (data[i].month == "Dec") {
@@ -172,12 +173,12 @@ function markerchartinfo(map, marker, stn, id, data) {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Dec: </b>'+stn.Dec, 
-                    'color: indianred']);
+                    'color: indianred', 0]);
                 } else {
                 dataTable.addRow([data[i].month+' '+data[i].year, 
                     data[i].level, 
                     '<b>'+ data[i].month+' '+data[i].year+'<p>'+'Level: </b>'+data[i].level+'<p><b>Avg.  level for Dec: </b>'+stn.Dec, 
-                    'color: cornflowerblue']);
+                    'color: cornflowerblue', 0]);
                 }
             }
         }
