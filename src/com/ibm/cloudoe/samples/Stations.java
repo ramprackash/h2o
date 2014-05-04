@@ -400,9 +400,7 @@ public class Stations extends HttpServlet {
 
         if (caStations == null) {
             caStations = new Stations();
-            out.write("{stillnull : true}");
             caStations.initStations("CA", false, out);
-            return;
         }
 
         String st = caStations.getStationsInJSON(out);
@@ -465,20 +463,21 @@ public class Stations extends HttpServlet {
                 }
                 if (donotadd == 0) {
                     obj.put("id", (String)o.get("id"));
+                    obj.put("dam", (String)o.get("dam"));
                     obj.put("lat", lt);
                     obj.put("lon", ln);
-                    obj.put("Jan", o.get("avgJan"));
-                    obj.put("Feb", o.get("avgFeb"));
-                    obj.put("Mar", o.get("avgMar"));
-                    obj.put("Apr", o.get("avgApr"));
-                    obj.put("May", o.get("avgMay"));
-                    obj.put("Jun", o.get("avgJun"));
-                    obj.put("Jul", o.get("avgJul"));
-                    obj.put("Aug", o.get("avgAug"));
-                    obj.put("Sep", o.get("avgSep"));
-                    obj.put("Oct", o.get("avgOct"));
-                    obj.put("Nov", o.get("avgNov"));
-                    obj.put("Dec", o.get("avgDec"));
+                    obj.put("Jan", (String)o.get("avgJan"));
+                    obj.put("Feb", (String)o.get("avgFeb"));
+                    obj.put("Mar", (String)o.get("avgMar"));
+                    obj.put("Apr", (String)o.get("avgApr"));
+                    obj.put("May", (String)o.get("avgMay"));
+                    obj.put("Jun", (String)o.get("avgJun"));
+                    obj.put("Jul", (String)o.get("avgJul"));
+                    obj.put("Aug", (String)o.get("avgAug"));
+                    obj.put("Sep", (String)o.get("avgSep"));
+                    obj.put("Oct", (String)o.get("avgOct"));
+                    obj.put("Nov", (String)o.get("avgNov"));
+                    obj.put("Dec", (String)o.get("avgDec"));
                     arr.add(obj);
                 } else {
                 }
