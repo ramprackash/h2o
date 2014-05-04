@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class Station implements Runnable {
+public class Station {
 
     // fields for each station from http://cdec.water.ca.gov/misc/resinfo.html
     private String id; // A code for ex: APN for ALPINE LAKE
@@ -130,20 +130,6 @@ public class Station implements Runnable {
         return stn;
     }
 
-    public void run() {
-        updateStationLocation("CA");
-    }
-
-    public Thread launchAvgThread() {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                updateStationAverages("CA");
-            }
-        });
-        t.start();
-        return t;
-    }
-    
     public void updateStationAverages(String state) {
         String station_info_url = 
             "http://cdec.water.ca.gov/cgi-progs/profile?s=" + this.id + "&type=res";

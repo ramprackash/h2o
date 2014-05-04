@@ -1,17 +1,21 @@
-This README.md file is displayed on your project page. You should edit this 
-file to describe your project, including instructions for building and 
-running the project, pointers to the license under which you are making the 
-project available, and anything else you think would be useful for others to
-know.
+Mapping publicly available water-table state records on a heat-map
+Currently covers only reservoirs in California but can easily be extended to
+cover other states where water-table information is made available publicly
 
-We have created an empty license.txt file for you. Well, actually, it says,
-"<Replace this text with the license you've chosen for your project.>" We 
-recommend you edit this and include text for license terms under which you're
-making your code available. A good resource for open source licenses is the 
-[Open Source Initiative] (http://opensource.org/).
 
-Be sure to update your project's profile with a short description and 
-eye-catching graphic.
+Deployed at:
+   <TODO: Provide link here after uploading to cloud>
 
-Finally, consider defining a timeline and work items on the "Current Work" tab 
-to give interested developers a sense of your cadence and upcoming enhancements.
+Data fetched from: 
+   http://cdec.water.ca.gov
+
+External libraries used or referenced (as javascript):
+   Google Maps API for javascript v3.0 - https://developers.google.com/maps/web/
+   Google Visualization API - https://developers.google.com/chart/
+   jsoup (version 1.7.3 - http://jsoup.org
+   java driver for Mongo DB (version 2.10.1) - http://central.maven.org/maven2/org/mongodb/mongo-java-driver/
+   jquery version 1.10 - http://code.jquery.com/
+
+The following packages are needed to build the code locally:
+   Apache ant
+

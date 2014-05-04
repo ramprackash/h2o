@@ -3,17 +3,12 @@
     <head>
         <link rel="stylesheet" type="text/css" href="index.css">
 
-        <link type="text/javascript" href="index.js">
-        
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false" ></script>
-
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false">
-        </script>
-
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false" ></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
         <script type="text/javascript">
 
+            //window.localStorage.setItem("testinit", 0);
             // Load visualization
             google.load('visualization', '1.0', {'packages':['corechart']});
             //google.setOnLoadCallback(initialize);
@@ -23,13 +18,22 @@
                     center: new google.maps.LatLng(39.33300018310547,-120.25), zoom: 7
                 };
                 
-                var map = new
-                    google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
                 var infowindow = new google.maps.InfoWindow({
-                    content: "Hello World"
+                    content: "Hello World" // Just an initializer
                 });
 
+                if (window.localStorage.getItem("testinit") == "1") {
+                    $.getJSON('/stations?initstatus=1', function(data) {
+                        if (data.initstatus != 2) {
+                            alert("Database being refreshed. Comeback after a jog!  "+data.initstatus+" "+data.progress+" "+data.url);
+                            return;
+                        } else {
+                            window.localStorage.setItem("testinit", "0");
+                        }
+                    });
+                }
 
                 $.getJSON('/stations', function(data) {
                     $.each(data, function(i, stn) {
@@ -138,12 +142,12 @@
                     var r=confirm("The database refresh may take up to eight minutes. Thank you for your patience.");
                     if (r==true)
                     {
-                        window.location.assign("http://www.complex.com/covers/danny-brown-interview-sky-high-2013-cover-story/?utm_campaign=complexmag+socialflow+09+2013&utm_source=twitter&utm_medium=social");
+                        $.getJSON('/stations?initdb=1', function(data) { });
+                        window.localStorage.setItem("testinit" , "1");
                         x = "DB Refresh";
                     }
                     else
                     {
-                        window.location.assign("http://www.reddit.com/tb/1ylltq");
                         x = "DB Refresh";
                     }
                     document.getElementById("dbrefresh").innerHTML=x;
@@ -168,7 +172,7 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Maps</a></li>
-                <li><a href="#" id="stations">Contact</a></li>
+                <li><a href="#">Contact</a></li>
                 <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB Refresh</a></li>
                 
                 
@@ -182,17 +186,6 @@
 	 Team 20 (CMPE-272)
         </div>
         
-        
-
-
-
-    
-</body>
-
-        <div id="map_canvas"> </div>
-	<div id="myfooter">
-	 Team 20 (CMPE-272)
-        </div>
     </body>
 
 </html>

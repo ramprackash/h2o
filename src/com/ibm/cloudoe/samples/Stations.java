@@ -21,11 +21,11 @@ import org.apache.wink.json4j.JSONArray;
 @Path(value="/stations")
 public class Stations extends HttpServlet {
 
-    static Stations caStations = null;
+    public static Stations caStations = null;
 
     ArrayList<Station> stationArray;
     private int initStatus;
-    public int initProgress;
+    private int initProgress;
     public String debugString;
     private String state;
     private MongoClient mongo;
@@ -71,6 +71,10 @@ public class Stations extends HttpServlet {
     public int initProgress()
     {
         return(this.initProgress);
+    }
+    public void setInitProgress(int i)
+    {
+        this.initProgress = i;
     }
 
     public boolean isInitDone()
@@ -151,33 +155,43 @@ public class Stations extends HttpServlet {
         String connURL;
         DB db;
 
-        if (this.initStatus == 2)
+        if ((this.initStatus >= 2) && (forceRefresh == false)) {
+            // Nothing to do
             return;
+        }
+
+        if ((this.initStatus == 1) && (forceRefresh == false)) {
+            // An init is already in progress
+            return;
+        }
 
         if (this.initStatus == 0)
             this.initStatus = 1;
 
-        out.println("InitStatus " + this.initStatus);
         try {
             connURL = getServiceURI();
-            this.mongo = new MongoClient(new MongoClientURI(connURL));
+            if (this.mongo == null) {
+                this.mongo = new MongoClient(new MongoClientURI(connURL));
+            }
             db = this.mongo.getDB("db");
             boolean stationTableExists = db.collectionExists("stations");
             boolean stationHistoryTableExists = db.collectionExists("stationHistory");
             if (stationHistoryTableExists && stationTableExists && !forceRefresh) {
                 updateStationsFromDB();
-                this.initStatus = 2;
+                this.initStatus = 3;
+                this.initProgress = 1000;
                 return;
             }
         } catch (Exception e) {
-                this.initProgress = 999;
             e.printStackTrace();
+            this.initProgress = 3000;
+            return;
         }
 
         //out.println("Trying resinfo <p>");
         //TODO: Have a dictionary of States => stationinfo urls
         if (state.equals("CA")) {
-                this.initProgress = 222;
+            this.initStatus = 1;
             all_stations_url = 
                 "http://cdec.water.ca.gov/misc/resinfo.html";
         }
@@ -190,10 +204,11 @@ public class Stations extends HttpServlet {
             Elements tableElements = doc.select("table");
             Elements tableRowElements = 
             tableElements.select(":not(thead) tr");
+            this.initProgress += 1000;
 
             //out.println("Retrieved resinfo <p>");
-            ArrayList<Thread> locThreads = new ArrayList<Thread>();
-            ArrayList<Thread> avgThreads = new ArrayList<Thread>();
+            //ArrayList<Thread> locThreads = new ArrayList<Thread>();
+            //ArrayList<Thread> avgThreads = new ArrayList<Thread>();
 
             for (int k = 1; k < tableRowElements.size(); k++) {
                 int i = k - 1;
@@ -244,33 +259,14 @@ public class Stations extends HttpServlet {
                 stn.updateStationLocation(state);
                 //out.println("Getting Averages <p>");
                 stn.updateStationAverages(state);
-                this.initProgress = k;
-            }
-            for (int i = 0; i < locThreads.size(); i++)
-            {
-                try {
-                    this.initProgress += i;
-                    ((Thread)locThreads.get(i)).join();
-                } catch (InterruptedException e) {
-                    System.out.println("Main thread Interrupted");
-                }
-            }
-            for (int i = 0; i < avgThreads.size(); i++)
-            {
-                try {
-                    this.initProgress += i;
-                    ((Thread)avgThreads.get(i)).join();
-                } catch (InterruptedException e) {
-                    System.out.println("Main thread Interrupted");
-                }
+                this.setInitProgress(k);
             }
         } catch (IOException e) {
-            this.initProgress = 333;
             e.printStackTrace();
         }
         //out.println("Done getting stations info for : " + 
                            //this.stationArray.size());
-        this.createDBEntries(state);
+        this.createDBEntries(state, out);
         this.initStatus = 2;
     }
 
@@ -289,50 +285,54 @@ public class Stations extends HttpServlet {
         return jdbcurl;
     }
 
-    private void createDBEntries(String state)
+    private void createDBEntries(String state, PrintWriter out)
     {
         int i = 0;
         DB db;
-        db = this.mongo.getDB("db");
-        DBCollection stationTable = db.getCollection("stations");
-        this.initProgress = 5000;
-        for (Station st : this.stationArray) {
-            i++;
-            BasicDBObject doc = new BasicDBObject();
-            BasicDBObject q   = new BasicDBObject();
+        try {
+            db = this.mongo.getDB("db");
+            DBCollection stationTable = db.getCollection("stations");
+            this.setInitProgress(5000);
+            for (Station st : this.stationArray) {
+                i++;
+                BasicDBObject doc = new BasicDBObject();
+                BasicDBObject q   = new BasicDBObject();
 
-            // query
-            q.put("id", st.id());
+                // query
+                q.put("id", st.id());
 
-            // update
-            doc.put("id", st.id());
-            doc.put("dam", st.dam());
-            doc.put("lake", st.lake());
-            doc.put("stream", st.stream());
-            doc.put("capacity", st.capacity());
-            doc.put("elevInFeet", st.elevation());
-            doc.put("county", st.county());
-            doc.put("riverBasin", st.riverBasin());
-            doc.put("latitude", st.latitude()); 
-            doc.put("longitude", st.longitude());
-            doc.put("avgJan", st.avgJan());
-            doc.put("avgFeb", st.avgFeb());
-            doc.put("avgMar", st.avgMar());
-            doc.put("avgApr", st.avgApr());
-            doc.put("avgMay", st.avgMay());
-            doc.put("avgJun", st.avgJun());
-            doc.put("avgJul", st.avgJul());
-            doc.put("avgAug", st.avgAug());
-            doc.put("avgSep", st.avgSep());
-            doc.put("avgOct", st.avgOct());
-            doc.put("avgNov", st.avgNov());
-            doc.put("avgDec", st.avgDec());
+                // update
+                doc.put("id", st.id());
+                doc.put("dam", st.dam());
+                doc.put("lake", st.lake());
+                doc.put("stream", st.stream());
+                doc.put("capacity", st.capacity());
+                doc.put("elevInFeet", st.elevation());
+                doc.put("county", st.county());
+                doc.put("riverBasin", st.riverBasin());
+                doc.put("latitude", st.latitude()); 
+                doc.put("longitude", st.longitude());
+                doc.put("avgJan", st.avgJan());
+                doc.put("avgFeb", st.avgFeb());
+                doc.put("avgMar", st.avgMar());
+                doc.put("avgApr", st.avgApr());
+                doc.put("avgMay", st.avgMay());
+                doc.put("avgJun", st.avgJun());
+                doc.put("avgJul", st.avgJul());
+                doc.put("avgAug", st.avgAug());
+                doc.put("avgSep", st.avgSep());
+                doc.put("avgOct", st.avgOct());
+                doc.put("avgNov", st.avgNov());
+                doc.put("avgDec", st.avgDec());
 
-            stationTable.update(q, doc, true, false);
+                this.setInitProgress(this.initProgress() + i);
+                stationTable.update(q, doc, true, false);
 
-            StationHistory sh = new StationHistory();
-            this.debugString = sh.initStationHistory(this, state, st.id());
-            this.initProgress += i;
+                StationHistory sh = new StationHistory();
+                this.debugString = sh.initStationHistory(this, state, st.id());
+            }
+        } catch (Exception e) {
+            e.printStackTrace(out);
         }
     }
 
@@ -382,11 +382,61 @@ public class Stations extends HttpServlet {
     {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        String init = request.getParameter("initdb");
+        String initstatus = request.getParameter("initstatus");
+
+        if (init != null && init.equals("1")) {
+            if (caStations == null) {
+                caStations = new Stations();
+            }
+            JSONObject obj=new JSONObject();
+            try {
+                obj.put("Refresh", "1");
+
+                out.write(obj.toString());
+                // Force refresh for DB
+                caStations.initStations("CA", true, out);
+                return;
+            } catch (Exception e) {
+                e.printStackTrace(out);
+                return;
+            }
+        }
+
+        if (initstatus != null && initstatus.equals("1")) {
+            try {
+                JSONObject obj1=new JSONObject();
+
+                if (caStations == null) {
+                    out.write("{caStations : NULL}");
+                    return;
+                    //caStations = new Stations();
+                    //caStations.initStations("CA", false, out);
+                }
+
+                obj1.put("initstatus", new Double(caStations.initStatus));
+                obj1.put("progress", new Double(caStations.initProgress()));
+                if (caStations.debugString == null) {
+                    obj1.put("url", new String("NULL"));
+                } else {
+                    obj1.put("url", new String(caStations.debugString));
+                }
+                out.write(obj1.toString());
+                return;
+            }
+            catch (Exception e) {
+                e.printStackTrace(out);
+                return;
+            }
+        }
 
         if (caStations == null) {
             caStations = new Stations();
+            out.write("{stillnull : true}");
             caStations.initStations("CA", false, out);
+            return;
         }
+
         String st = caStations.getStationsInJSON(out);
         out.write(st);
         //out.println(st);

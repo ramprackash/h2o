@@ -1,6 +1,6 @@
 applications:
 - services:
-  - mongodb-a6
+  - mongodb-os
   host: h2o
   disk: 1024M
   name: h2o
