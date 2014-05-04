@@ -15,8 +15,8 @@ body {
 
 
 #mymenu {
-    height: 10%;
-	margin-bottom: 30px;
+    height: 5%;
+	margin-bottom: 10px;
 	text-align:center;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	
@@ -26,10 +26,13 @@ body {
 
 /* implementation of the map */
 #map_canvas {
-    height: 60%;
-    margin-left: 120px;
-    margin-right: 120px;
-    margin-bottom: 120px;
+    height: 80%;
+    width: 60%;
+    border:2px solid;
+    box-shadow: 10px 10px 5px #888888;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
 }
 
 #map_canvas img {
@@ -47,7 +50,7 @@ body {
 }
 
 #myfooter {
- 	height: 30px;
+ 	height: 10px;
     width: 100%;
     position: absolute;
     bottom: 0;
