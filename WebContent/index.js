@@ -24,6 +24,7 @@ function markerchartinfo(map, marker, stn, id, data) {
         dataTable.addColumn({'type':'string', 'role':'tooltip', 'p': {'html':true}});
         dataTable.addColumn({'type':'string', 'role':'style'});
         dataTable.addColumn('number', '< Monthly Avg');
+
         for (var i = 0; i < data.length; i++) {
             if (data[i].month == "Jan") {
                 if (data[i].level < parseFloat(stn.Jan)) {
@@ -224,20 +225,45 @@ function initialize() {
 
     var mapOptions = {
         center: new google.maps.LatLng(39.33300018310547,-120.25), 
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
         zoom: 7
     };
     var map = new google.maps.Map(document.getElementById("map_canvas"),
             mapOptions);
 
+    var pinColorRed = "FE7569";
+    var pinImageRed = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorRed,
+                                               new google.maps.Size(21, 34),
+                                               new google.maps.Point(0,0),
+                                               new google.maps.Point(10, 34));
+
     $.getJSON('/stations', function(data) {
         $.each(data, function(i, stn) {
             var myLatLng = new google.maps.LatLng(stn.lat, stn.lon);
             var marker = new google.maps.Marker({
-                position: myLatLng, map: map, title: stn.id
+                position: myLatLng, map: map, title: stn.id, icon: pinImageRed
+            });
+
+            // This is a hack - Change marker color if the current level is
+            // greater than April's average - Hardcoding the month we are in now
+            var resturl = '/stationhistory?id='+stn.id;
+            $.getJSON(resturl, function(data) {
+                var pinColorBlue = "90C1F2";
+                var pinImageBlue = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorBlue,
+                    new google.maps.Size(21, 34),
+                    new google.maps.Point(0,0),
+                    new google.maps.Point(10, 34));
+                for (var m = 0; m < data.length; m++) {
+                    if ((data[m].month == "Apr") && (data[m].year == "2014")) {
+                        if (data[m].level > parseFloat(stn.Apr)) {
+                            marker.setIcon(pinImageBlue);
+                        }
+                    }
+                }
             });
 
             google.maps.event.addListener(marker, 'click', function() {
-                markeraction (map, marker, stn);
+                markeraction(map, marker, stn);
             });
         });
     });
