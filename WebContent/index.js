@@ -215,7 +215,7 @@ function initialize() {
     if (window.localStorage.getItem("testinit") == "1") {
         $.getJSON('/stations?initstatus=1', function(data) {
             if (data.initstatus < 2) {
-                alert("Database being refreshed. You have time to go for jog!  "+data.initstatus+" "+data.progress+" "+data.url);
+                alert("Database being refreshed. Please be patient...\nRetrieved "+data.progress+" records");
                 return;
             } else {
                 window.localStorage.setItem("testinit", "0");

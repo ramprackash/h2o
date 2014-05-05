@@ -135,7 +135,8 @@ public class Station {
             "http://cdec.water.ca.gov/cgi-progs/profile?s=" + this.id + "&type=res";
 
         try {
-            Document doc = Jsoup.connect(station_info_url).get();
+            Thread.sleep(100);
+            Document doc = Jsoup.connect(station_info_url).timeout(0).get();
             Elements tableElements = doc.select("table");
 
             Elements tableRowElements = tableElements.select(":not(thead) tr");
@@ -190,6 +191,10 @@ public class Station {
         } catch(IOException e) {
             e.printStackTrace();
         }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //out.println(" Jan Avg =  " + this.avgJan + " Feb Avg =  " + this.avgFeb);
     }
 
@@ -201,7 +206,8 @@ public class Station {
         station_info_url = station_info_url + this.id;
 
         try {
-            Document doc = Jsoup.connect(station_info_url).get();
+            Thread.sleep(100);
+            Document doc = Jsoup.connect(station_info_url).timeout(0).get();
             Elements tableElements = doc.select("table");
 
             Elements tableRowElements = tableElements.select(":not(thead) tr");
@@ -232,6 +238,10 @@ public class Station {
         } catch(IOException e) {
             e.printStackTrace();
         }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //System.out.println(" Lat " + this.latitude + " Lon " + this.longitude);
     }
 
@@ -349,6 +359,29 @@ public class Station {
     {
         return avgDec;
     }
+
+    public Thread launchAvgThread(String st)
+    {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                updateStationAverages("CA");
+            }
+        });
+        t.start();
+        return t;
+    }
+
+    public Thread launchLocThread(String st) 
+    {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                updateStationLocation("CA");
+            }
+        });
+        t.start();
+        return t;
+    }
+
 
     public static float googleLatitude(String s)
     {

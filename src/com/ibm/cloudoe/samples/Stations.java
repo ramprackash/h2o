@@ -149,12 +149,10 @@ public class Stations extends HttpServlet {
             if (stationHistoryTableExists && stationTableExists && !forceRefresh) {
                 updateStationsFromDB();
                 this.initStatus = 3;
-                this.initProgress = 1000;
                 return;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            this.initProgress = 3000;
             return;
         }
 
@@ -174,11 +172,10 @@ public class Stations extends HttpServlet {
             Elements tableElements = doc.select("table");
             Elements tableRowElements = 
             tableElements.select(":not(thead) tr");
-            this.initProgress += 1000;
 
             //out.println("Retrieved resinfo <p>");
-            //ArrayList<Thread> locThreads = new ArrayList<Thread>();
-            //ArrayList<Thread> avgThreads = new ArrayList<Thread>();
+            ArrayList<Thread> locThreads = new ArrayList<Thread>();
+            ArrayList<Thread> avgThreads = new ArrayList<Thread>();
 
             for (int k = 1; k < tableRowElements.size(); k++) {
                 int i = k - 1;
@@ -215,22 +212,34 @@ public class Stations extends HttpServlet {
                         stream, capacity);
                 try {
                     this.stationArray.add(stn);
-                    //Thread locThread = new Thread(stn);
-                    //locThread.start();
-                    //locThreads.add(locThread);
-                    //Thread avgThread = stn.launchAvgThread();
-                    //avgThreads.add(avgThread);
+                    Thread locThread = stn.launchLocThread(state);
+                    locThreads.add(locThread);
+                    Thread avgThread = stn.launchAvgThread(state);
+                    avgThreads.add(avgThread);
                 }
                 catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                //out.println("Getting location <p>");
-                stn.updateStationLocation(state);
-                //out.println("Getting Averages <p>");
-                stn.updateStationAverages(state);
-                this.setInitProgress(k);
             }
+            for (int i = 0; i < locThreads.size(); i++)
+            {
+                try {
+                    ((Thread)locThreads.get(i)).join();
+                } catch (InterruptedException e) {
+                    System.out.println("Main thread Interrupted");
+                }
+            }
+            for (int i = 0; i < avgThreads.size(); i++)
+            {
+                try {
+                    ((Thread)avgThreads.get(i)).join();
+                    this.initProgress += i;
+                } catch (InterruptedException e) {
+                    System.out.println("Main thread Interrupted");
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -262,7 +271,7 @@ public class Stations extends HttpServlet {
         try {
             db = this.mongo.getDB("db");
             DBCollection stationTable = db.getCollection("stations");
-            this.setInitProgress(5000);
+            this.setInitProgress(0);
             for (Station st : this.stationArray) {
                 i++;
                 BasicDBObject doc = new BasicDBObject();
@@ -295,7 +304,7 @@ public class Stations extends HttpServlet {
                 doc.put("avgNov", st.avgNov());
                 doc.put("avgDec", st.avgDec());
 
-                this.setInitProgress(this.initProgress() + i);
+                this.setInitProgress(i);
                 stationTable.update(q, doc, true, false);
 
                 StationHistory sh = new StationHistory();
