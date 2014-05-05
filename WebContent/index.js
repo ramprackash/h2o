@@ -244,8 +244,8 @@ function initialize() {
                 position: myLatLng, map: map, title: stn.id, icon: pinImageRed
             });
 
-            // This is a hack - Change marker color if the current level is
-            // greater than April's average - Hardcoding the month we are in now
+            // Change marker color if the current level is
+            // greater than the last reported month's average
             var resturl = '/stationhistory?id='+stn.id;
             $.getJSON(resturl, function(data) {
                 var pinColorBlue = "90C1F2";
@@ -253,11 +253,65 @@ function initialize() {
                     new google.maps.Size(21, 34),
                     new google.maps.Point(0,0),
                     new google.maps.Point(10, 34));
-                for (var m = 0; m < data.length; m++) {
-                    if ((data[m].month == "Apr") && (data[m].year == "2014")) {
-                        if (data[m].level > parseFloat(stn.Apr)) {
-                            marker.setIcon(pinImageBlue);
-                        }
+                var last = data.length - 1;
+                if (data[last].month == "Jan") {
+                    if (data[last].level > parseFloat(stn.Jan)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Feb") {
+                    if (data[last].level > parseFloat(stn.Feb)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Apr") {
+                    if (data[last].level > parseFloat(stn.Apr)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Mar") {
+                    if (data[last].level > parseFloat(stn.Mar)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "May") {
+                    if (data[last].level > parseFloat(stn.May)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Jun") {
+                    if (data[last].level > parseFloat(stn.Jun)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Jul") {
+                    if (data[last].level > parseFloat(stn.Jul)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Aug") {
+                    if (data[last].level > parseFloat(stn.Aug)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Sep") {
+                    if (data[last].level > parseFloat(stn.Sep)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Oct") {
+                    if (data[last].level > parseFloat(stn.Oct)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Nov") {
+                    if (data[last].level > parseFloat(stn.Nov)) {
+                        marker.setIcon(pinImageBlue);
+                    }
+                }
+                if (data[last].month == "Dec") {
+                    if (data[last].level > parseFloat(stn.Dec)) {
+                        marker.setIcon(pinImageBlue);
                     }
                 }
             });
