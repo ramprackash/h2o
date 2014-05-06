@@ -380,6 +380,9 @@ public class Stations extends HttpServlet {
                 e.printStackTrace(out);
                 return;
             }
+        } else if (init !=null) {
+            out.write("{\"invalidapiuse\":1}");
+            return;
         }
 
         if (initstatus != null && initstatus.equals("1")) {
@@ -405,6 +408,9 @@ public class Stations extends HttpServlet {
                 e.printStackTrace(out);
                 return;
             }
+        } else if (initstatus != null) {
+            out.write("{\"invalidapiuse\":1}");
+            return;
         }
 
         if (caStations == null) {
