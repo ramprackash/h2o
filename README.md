@@ -3,7 +3,7 @@ Currently covers only reservoirs in California but can easily be extended to
 cover other states where water-table information is made available publicly
 
 
-Deployed at:
+Deployed on the bluemix cloud:
    <TODO: Provide link here after uploading to cloud>
 
 Data fetched from: 
