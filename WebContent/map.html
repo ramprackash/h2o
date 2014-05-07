@@ -10,7 +10,7 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="index.js" type="text/javascript"></script>
     <script type="text/javascript">
-        google.load('visualization', '1.0', {'packages':['corechart']});
+    google.load('visualization', '1.0', {'packages':['corechart']});
             google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 
@@ -33,19 +33,18 @@
 
                 <li><a href="api.html#">API</a></li>
 
-                <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB Refresh</a></li>
+                <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB
+                Refresh</a></li>
             </ul>
         </nav>
     </div>
 
-    <div id="timeline_slider">
-        <center>
-        <p>
-            Use the slider to set the timeline for the waterlevel map<p>
-            2004
-        <input type="range" id="slider1" min="2004" max="2014" value="2014" step="1" style="width: 400px;" onchange="updateslider(this.value)"/>
-        2014<p>
-        <div id="output"></div>
+    <div id="timeline_intro">
+        <p><center>
+        Use the slider to set the timeline for the waterlevel map</center></p> </div>
+
+      
+
         <script type="text/javascript">
             $(function(){
                     var val = $('#slider1').val();
@@ -57,25 +56,39 @@
                         output.html("<b>Currently showing map for "+this.value);
                         });
                     });
-        </script>
+            </script>
+
+        <div id="timeline_slider"><center>
+
+            
+
+            2004 <input id="slider1" max="2014" min="2004" onchange=
+            "updateslider(this.value)" step="1" style="width: 400px;" type=
+            "range" value="2014"> 2014 
+        </center>
+            
+
+
+            
+            
         </div>
+
+        <center><div id="output"></div></center>
+
     <div id="container">
-        <div id="map_canvas"></div>
+        <div id="map_canvas"></div><div id = "markers">
             <center>
-            <img
+            <p><img
             src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569"><t>
-            reservoirs where measured level for the year was higher than the average for that month.
-            <img
+            reservoirs where measured level for the year was higher than the average for that month. </p>
+    <p>           <img
             src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|90C1F2"><t>
             reservoirs where measured level for the year was higher than the average for that month.
-        </center>
-    </div>
+        </center></p></div>
 
+        
+  
 
-    <div id="myfooter">
-        Team 20
-    </div><script src="vendor/jquery.js"></script><script src="foundation.min.js"></script><script>
-  $(document).foundation();
-    </script>
+    
 </body>
 </html>

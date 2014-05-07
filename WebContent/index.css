@@ -17,25 +17,76 @@ body {
     padding-bottom: 25px;
 }
 
+#timeline_intro {
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .7em;
+    letter-spacing: .25em;
+    height: 5em;
+    line-height: 5em;
+}
+
+#timeline_slider {
+    letter-spacing: .25em;
+    height: 5em;
+    line-height: 5em;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    font-size: .7em;
+    letter-spacing: .25em;
+    height: 5em;
+    line-height: 5em;
+}
+
 #container {
     height: 80%;
     padding-top: 25px;
     padding-bottom: 25px;
 
-    
+}
+
+
+#output {
+
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .7em;
+    letter-spacing: .25em;
+    height: 5em;
+    line-height: 5em;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
 }
 
 /* implementation of the map */
+
 #map_canvas {
-    height: 85%;
+    height: 95%;
     width: 85%;
     border: 2px solid;
     border-color: silver;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20px;
+    }
 
-    
+#markers {
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .3em;
+    letter-spacing: .25em;
+    height: 5em;
+    line-height: 5em;
+    padding-top: 25px;
+
+
+}    
+
 }
 
 #map_canvas img {
@@ -68,6 +119,7 @@ body {
 }
 
 /* implementation of the menubar */
+
 #nav {
     position: absolute;
     display: block;
