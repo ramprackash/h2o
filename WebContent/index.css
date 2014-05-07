@@ -44,12 +44,38 @@ body {
     height: 80%;
     padding-top: 25px;
     padding-bottom: 25px;
-
 }
 
+#contacts {
+    height: 80%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .7em;
+    letter-spacing: .25em;
+    line-height: 5em;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#api {
+    height: 80%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .6em;
+    letter-spacing: .25em;
+    line-height: 5em;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
 
 #output {
-
     color: #eee;
     color: rgba(255,255,255,0.75);
     text-transform: uppercase;
@@ -59,11 +85,9 @@ body {
     height: 5em;
     line-height: 5em;
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-
 }
 
 /* implementation of the map */
-
 #map_canvas {
     height: 95%;
     width: 85%;
@@ -71,7 +95,7 @@ body {
     border-color: silver;
     margin-left: auto;
     margin-right: auto;
-    }
+}
 
 #markers {
     color: #eee;
@@ -83,8 +107,6 @@ body {
     height: 5em;
     line-height: 5em;
     padding-top: 25px;
-
-
 }    
 
 }
@@ -119,7 +141,6 @@ body {
 }
 
 /* implementation of the menubar */
-
 #nav {
     position: absolute;
     display: block;
@@ -143,6 +164,12 @@ body {
     display: inline-block;
     text-align: center;
     padding: 0 1.5em;
+}
+
+a {
+    text-decoration: none;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
 }
 
 #nav > ul > li > a,#nav > ul > li > span {
