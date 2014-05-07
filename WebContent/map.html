@@ -31,17 +31,46 @@
 
                 <li><a href="#">Contact</a></li>
 
-                <li><a href="#">API</a></li>
+                <li><a href="api.html#">API</a></li>
 
-                <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB
-                Refresh</a></li>
+                <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB Refresh</a></li>
             </ul>
         </nav>
     </div>
 
+    <div id="timeline_slider">
+        <center>
+        <p>
+            Use the slider to set the timeline for the waterlevel map<p>
+            2004
+        <input type="range" id="slider1" min="2004" max="2014" value="2014" step="1" style="width: 400px;" onchange="updateslider(this.value)"/>
+        2014<p>
+        <div id="output"></div>
+        <script type="text/javascript">
+            $(function(){
+                    var val = $('#slider1').val();
+                    output  = $('#output');
+
+                    output.html("<b>Currently showing map for " + val);
+
+                    $('#slider1').change(function(){
+                        output.html("<b>Currently showing map for "+this.value);
+                        });
+                    });
+        </script>
+        </div>
     <div id="container">
         <div id="map_canvas"></div>
+            <center>
+            <img
+            src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569"><t>
+            reservoirs where measured level for the year was higher than the average for that month.
+            <img
+            src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|90C1F2"><t>
+            reservoirs where measured level for the year was higher than the average for that month.
+        </center>
     </div>
+
 
     <div id="myfooter">
         Team 20

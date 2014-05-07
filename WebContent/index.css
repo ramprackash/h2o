@@ -27,17 +27,15 @@ body {
 
 /* implementation of the map */
 #map_canvas {
-    height: 95%;
-    width: 100%;
-    border: 1px solid;
+    height: 85%;
+    width: 85%;
+    border: 2px solid;
     border-color: silver;
-/* box-shadow: 10px 10px 5px #888888; */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
 
     
-}
 }
 
 #map_canvas img {

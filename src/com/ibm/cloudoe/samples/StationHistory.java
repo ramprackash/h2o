@@ -26,7 +26,7 @@ public class StationHistory extends HttpServlet {
     // object
     // KEY: Start
     private String id;
-    private String year;
+    private Integer year;
     private String month;
     // KEY: End
     private String level;
@@ -40,7 +40,7 @@ public class StationHistory extends HttpServlet {
     }
 
     public String year() {
-        return this.year;
+        return this.year.toString();
     }
 
     public String month() {
@@ -75,20 +75,20 @@ public class StationHistory extends HttpServlet {
             for (int k = 2; k < tableRowElements.size(); k++) {
                 Element row = tableRowElements.get(k);
                 Elements rowItems = row.select("td");
-                String date = null, level = null, month = null, year = null;
+                String date = null, level = null, month = null, yr = null;
                 for (int j = 0; j < rowItems.size(); j++) {
                     switch(j) {
                         case 0:
                             date = rowItems.get(j).text();
                             month = date.substring(0, 2);
-                            year = date.substring(3, 7);
+                            yr = date.substring(3, 7);
                             break;
                         case 2:
                             level = rowItems.get(j).text();
                             break;
                     }
                 }
-                if (year == null) {
+                if (yr == null) {
                     continue;
                 }
 
@@ -100,12 +100,12 @@ public class StationHistory extends HttpServlet {
 
                 // query
                 q.put("id", id);
-                q.put("year", year);
+                q.put("year", new Integer(yr));
                 q.put("month", month);
 
                 // update record
                 doc.put("id", id);
-                doc.put("year", year);
+                doc.put("year", new Integer(yr));
                 doc.put("month", month);
                 doc.put("level", level);
 
@@ -139,7 +139,7 @@ public class StationHistory extends HttpServlet {
             q.put("id", id);
         }
         if (year != null) {
-            q.put("year", year);
+            q.put("year", new Integer(year));
         }
         if (month != null) {
             q.put("month", month);
@@ -153,7 +153,7 @@ public class StationHistory extends HttpServlet {
                 DBObject o = c.next();
                 StationHistory sh = new StationHistory();
                 sh.id = (String)o.get("id");
-                sh.year = (String)o.get("year");
+                sh.year = (Integer)o.get("year");
                 sh.month = (String)o.get("month");
                 sh.level = (String)o.get("level");
                 if (sh.level.matches("[0-9]+") && sh.level.length() >= 1) {
@@ -194,6 +194,7 @@ public class StationHistory extends HttpServlet {
         Stations stns = Stations.getStationsObject();
         response.setContentType("text/html");
         String id = request.getParameter("id");
+        String upto = request.getParameter("upto");
         String year = request.getParameter("year");
         String month = request.getParameter("month");
         PrintWriter out = response.getWriter();
@@ -201,8 +202,12 @@ public class StationHistory extends HttpServlet {
             stns = new Stations();
             stns.initStations("CA", false, out);
         }
-        String sh = StationHistory.getStationHistoryInJSON(stns, id, year, month, out);
-        out.write(sh);
+        String sh = StationHistory.getStationHistoryInJSON(stns, id, upto, year, month, out);
+        if (sh == null) {
+            out.write("[]");
+        } else {
+            out.write(sh);
+        }
         out.close();
     }
     // if id==0, then dump all records
@@ -211,6 +216,7 @@ public class StationHistory extends HttpServlet {
     // if id==valid && year==valid && month==valid dump the exact record
     public static String getStationHistoryInJSON(Stations stns, 
             String id,
+            String upto,
             String year,
             String month,
             PrintWriter out) {
@@ -228,7 +234,13 @@ public class StationHistory extends HttpServlet {
             q.put("id", id);
         }
         if (year != null) {
-            q.put("year", year);
+            if (upto != null) {
+                int newyear = new Integer(year).intValue();
+                newyear = newyear + 1;
+                q.put("year", new BasicDBObject("$lt", new Integer(newyear)));
+            } else {
+                q.put("year", new Integer(year));
+            }
         }
         if (month != null) {
             q.put("month", month);
@@ -243,7 +255,7 @@ public class StationHistory extends HttpServlet {
                 StationHistory sh = new StationHistory();
                 JSONObject obj = new JSONObject();
                 sh.id = (String)o.get("id");
-                sh.year = (String)o.get("year");
+                sh.year = (Integer)o.get("year");
                 switch((String)o.get("month")) {
                     case "01":
                         sh.month = "Jan";
@@ -284,7 +296,7 @@ public class StationHistory extends HttpServlet {
                 }
                 sh.level = (String)o.get("level");
                 obj.put("id", new String(sh.id));
-                obj.put("year", new String(sh.year));
+                obj.put("year", new Integer(sh.year));
                 obj.put("month", new String(sh.month));
                 //obj.put("level", Double.parseDouble(sh.level));
                 if (sh.level.matches("[0-9]+") && sh.level.length() >= 1) {

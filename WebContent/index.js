@@ -1,3 +1,6 @@
+function updateslider(year) {
+    re_initialize(year);
+}
 
 function dbRefresh() {
 
@@ -210,8 +213,12 @@ function markeraction(map, marker, stn) {
 
     });
 }
-                
+
 function initialize() {
+   re_initialize("2014");
+}
+                
+function re_initialize(year) {
     if (window.localStorage.getItem("testinit") == "1") {
         $.getJSON('/stations?initstatus=1', function(data) {
             if (data.initstatus < 2) {
@@ -246,7 +253,11 @@ function initialize() {
 
             // Change marker color if the current level is
             // greater than the last reported month's average
-            var resturl = '/stationhistory?id='+stn.id;
+            var monthNames = [ "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ];
+
+            var d = new Date();
+            var resturl = '/stationhistory?id='+stn.id+'&upto=1&year='+year+'&month='+monthNames[d.getMonth()];
+
             $.getJSON(resturl, function(data) {
                 var pinColorBlue = "90C1F2";
                 var pinImageBlue = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorBlue,
