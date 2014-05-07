@@ -9,30 +9,39 @@ body {
     background-image: url(IMG/background.png);
 }
 
-#myheader {
-    height: 10%;
-}
-
-
 #mymenu {
     height: 5%;
-	margin-bottom: 10px;
-	text-align:center;
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    padding-top: 10px;
+    padding-bottom: 25px;
 }
 
+#container {
+    height: 80%;
+    padding-top: 25px;
+    padding-bottom: 25px;
 
+    
+}
 
 /* implementation of the map */
 #map_canvas {
-    height: 80%;
-    width: 60%;
-    border:2px solid;
-    box-shadow: 10px 10px 5px #888888;
+    height: 95%;
+    width: 100%;
+    border: 1px solid;
+    border-color: silver;
+/* box-shadow: 10px 10px 5px #888888; */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+       -moz-animation: fadein 2s; /* Firefox */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+         -o-animation: fadein 2s; /* Opera */
+            animation: fadein 2s;
+}
 }
 
 #map_canvas img {
@@ -50,120 +59,105 @@ body {
 }
 
 #myfooter {
- 	height: 10px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
     text-align: center;
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    clear: both;
+    position: relative;
+    display: block;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .7em;
+    letter-spacing: .25em;
+    height: 5em;
+    line-height: 5em;
 }
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* implementation of the menubar */
-
-* {
-	margin: 0;
-	padding: 0;
-	outline: none;	
-}
-
-ul {
-	list-style: none;	
-	
-}
-
-
-
-#navigation {
-	margin: 40px 0;	
-	font: bold 12px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-transform: uppercase;
-	color: #444;
-	
-}
-
-#navigation:after {
-	clear: both;
-    content: ".";
+#nav {
+    position: absolute;
     display: block;
-    height: 0;
-    visibility: hidden;
+    left: 0;
+    width: 100%;
+    text-align: center;
 }
 
-#navigation ul {	
-	float: left;
-	border-radius: 100px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.07);
-	-webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.07);
-    overflow: hidden;
-
+#nav > ul > li > ul {
+    display: none;
 }
 
-#navigation li {
-	float: left;
-	border-style: solid; 
-	border-width: 1px;
-    border-color: #BABABA #BABABA #BABABA #FFF;
-	box-shadow: 0 1px rgba(255,255,255,1) inset;
-	-webkit-box-shadow: 0 1px rgba(255,255,255,1) inset;
-	background: #F7F7F7; /* Old browsers */
-	background: -moz-linear-gradient(top, #F7F7F7 0%, #EDEDED 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F7F7F7), color-stop(100%,#EDEDED)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #F7F7F7 0%,#EDEDED 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #F7F7F7 0%,#EDEDED 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #F7F7F7 0%,#EDEDED 100%); /* IE10+ */
-	background: linear-gradient(top, #F7F7F7 0%,#EDEDED 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F7F7F7', endColorstr='#EDEDED',GradientType=0 ); /* IE6-9 */	
+#nav > ul {
+    display: inline-block;
+    border-radius: .35em;
+    box-shadow: inset 0 0 1px 1px rgba(255,255,255,0.25);
+    padding: 0 1.5em;
 }
 
-#navigation li:hover, #navigation li.current {
-	box-shadow: 0 1px rgba(255,255,255,0.2) inset;
-	-webkit-box-shadow: 0 1px rgba(255,255,255,0.2) inset;
-	border-color: #262626 !important;
-	background: #4D4D4D; /* Old browsers */
-	background: -moz-linear-gradient(top, #4D4D4D 0%, #262626 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4D4D4D), color-stop(100%,#262626)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #4D4D4D 0%,#262626 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #4D4D4D 0%,#262626 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #4D4D4D 0%,#262626 100%); /* IE10+ */
-	background: linear-gradient(top, #4D4D4D 0%,#262626 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4D4D4D', endColorstr='#262626',GradientType=0 ); /* IE6-9 */
+#nav > ul > li {
+    display: inline-block;
+    text-align: center;
+    padding: 0 1.5em;
 }
 
-#navigation a {
-	display: block;
-	padding: 10px 15px;
-	color: #444;
-	text-decoration: none;
-	text-shadow: 0 1px #FFF;
+#nav > ul > li > a,#nav > ul > li > span {
+    display: block;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .7em;
+    letter-spacing: .25em;
+    height: 5em;
+    line-height: 5em;
+    -moz-transition: all .25s ease-in-out;
+    -webkit-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    -ms-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+    outline: 0;
 }
 
-#navigation a:hover, #navigation li.current a {
-	color: #FFF;
-	text-shadow: 0 1px #000;
+#nav > ul > li:hover > a,#nav > ul > li.active > a,#nav > ul > li.active > span {
+    color: #fff;
 }
 
-#navigation li:first-child {
-	border-left-color: #BABABA;
-	border-radius: 100px 0 0 100px;
+.dropotron {
+    background: #222835 url(images/overlay.png);
+    background-color: rgba(44,50,63,0.925);
+    padding: 1.25em 1em;
+    border-radius: .35em;
+    box-shadow: inset 0 0 1px 1px rgba(255,255,255,0.25);
+    min-width: 12em;
+    text-align: left;
 }
 
-#navigation li:last-child {
-	border-radius: 0 100px 100px 0;
+.dropotron.level-0 {
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.dropotron a,.dropotron span {
+    display: block;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .7em;
+    letter-spacing: .25em;
+    border-top: solid 1px rgba(255,255,255,0.15);
+    line-height: 3em;
+    -moz-transition: all .25s ease-in-out;
+    -webkit-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    -ms-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+
+.dropotron li:first-child a,.dropotron li:first-child span {
+    border-top: 0;
+}
+
+.dropotron li:hover > a,.dropotron li:hover > span {
+    color: #fff;
 }
