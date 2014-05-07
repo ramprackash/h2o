@@ -36,9 +36,9 @@
 
 /* FlexSlider Necessary Styles
 *********************************/
-.flexslider {margin: 0; padding: 0; width:100%; }
+.flexslider {margin: 0; padding: 0; }
 .flexslider .slides > li {display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
-.flexslider .slides img {width:1680px; height: 666px; display: block;}
+.flexslider .slides img {width: 100%; max-height: 95%; display: block;}
 .flex-pauseplay span {text-transform: capitalize;}
 
 /* Clearfix for the .slides element */

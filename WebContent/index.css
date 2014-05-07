@@ -36,11 +36,7 @@ body {
     margin-right: auto;
     margin-bottom: 20px;
 
-    -webkit-animation: fadein 2s; /* Safari and Chrome */
-       -moz-animation: fadein 2s; /* Firefox */
-        -ms-animation: fadein 2s; /* Internet Explorer */
-         -o-animation: fadein 2s; /* Opera */
-            animation: fadein 2s;
+    
 }
 }
 
