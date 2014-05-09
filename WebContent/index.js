@@ -256,7 +256,11 @@ function re_initialize(year) {
             var monthNames = [ "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ];
 
             var d = new Date();
-            var resturl = '/stationhistory?id='+stn.id+'&upto=1&year='+year+'&month='+monthNames[d.getMonth()];
+            if (year == "2014") {
+                var resturl = '/stationhistory?id='+stn.id+'&upto=1&year='+year;
+            } else {
+                var resturl = '/stationhistory?id='+stn.id+'&upto=1&year='+year+'&month='+monthNames[d.getMonth()];
+            }
 
             $.getJSON(resturl, function(data) {
                 var pinColorBlue = "90C1F2";
