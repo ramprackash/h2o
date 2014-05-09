@@ -3,16 +3,7 @@
 <html>
 <head>
     <link href="index.css" rel="stylesheet" type="text/css">
-    <script src=
-    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&amp;sensor=false"
-    type="text/javascript"></script>
-    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="index.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    google.load('visualization', '1.0', {'packages':['corechart']});
-            google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
 
     <title>API</title>
 </head>
@@ -38,28 +29,45 @@
     </div>
 
     <div id="api">
-        <h3>Application developers are welcome to use the database hosted on
-        this site using the following RESTful GET APIs provided:</h3>
+        <h2>Application developers are welcome to use the database hosted on
+        this site using the following RESTful GET APIs provided:</h2>
 
-        <p><http://h2o.ng.bluemix.net/stations
+    <br><b>http://h2o.ng.bluemix.net/stations</b>
         - To get the list of measuring stations for reservoirs in the
-        database.</p>
+        database.
+        This also provides the position in latitude/longitude format and other
+        information about each station.<br> 
+        <center>(The "id" returned by this API should be
+        used in other APIs mentioned below.)
+    </center>
 
-        <p>This also provides the position in latitude/longitude format</p>
+        <br><b>http://h2o.ng.bluemix.net/stationhistory</b>
+        - To get the historical water-level for 10 years for all stations.
 
-        <p>http://h2o.ng.bluemix.net/stationhistory
-        - To get the historical water-level for 10 years for all stations</p>
-
-        <p>http://h2o.ng.bluemix.net/stationhistory?id&lt;STNID&gt; 
+        <br>
+        <br><b>http://h2o.ng.bluemix.net/stationhistory?id=&lt;STNID&gt; </b>
         - To get historical water-level data for 10 years for the given station
-        id</p>
+        id.
 
-        <p style="font-weight: bold";><h2 style="font-color: red";>WARNING: The data served by this website
-        may not be up-to-date. </h2></p>
+        <br>
+        <br><b>http://h2o.ng.bluemix.net/stationhistory?id=&lt;STNID&gt;&amp;year=&lt;YYYY&gt;</b>
+        - To get historical water-level data for the specified year for the
+        given station id.
+
+        <br>
+        <br>
+        <br>
+        <hr>
+
+        <center>
+        <p style="font-weight: bold";><h2 style="font-color: red";>!!WARNING: The data served by this website
+        may not be up-to-date!! </h2></p>
 
         <p style="font-weight: bold">It is a convienent aggregation of data,
-        the most recent of which can be obtained by browsing numerous pages of
-        the CDEC website - http://cdec.water.ca.gov</p><br>
+        the most recent of which can be obtained by browsing various pages of
+        the CDEC website - <a style="color:#0000ff" href="http://cdec.water.ca.gov">http://cdec.water.ca.gov</a></p>
+        </center>
+        <hr>
     </div>
 
     <div id="myfooter">
