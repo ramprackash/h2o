@@ -62,16 +62,20 @@ body {
 }
 
 #api {
-    height: 80%;
+    
+    margin-top: 25px;
+    
+    height: 77%;
     padding-top: 25px;
     padding-bottom: 25px;
-    color: #eee;
-    color: rgba(255,255,255,0.75);
-    
-    font-size: .7em;
+    padding-left: 45px;
+
+    background-color: #FFFFFF;
+    font-size: .8em;
     letter-spacing: .25em;
     line-height: 5em;
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
 }
 
 #output {
