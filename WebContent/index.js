@@ -231,7 +231,7 @@ function re_initialize(year) {
     }
 
     var mapOptions = {
-        center: new google.maps.LatLng(39.33300018310547,-120.25), 
+        center: new google.maps.LatLng(36.407385,-115.392557), 
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         zoom: 7
     };
