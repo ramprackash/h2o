@@ -1,9 +1,9 @@
 applications:
 - services:
-  - mongodb-v6
-  host: h2o
+  - mongodb-z0
+  host: h3o
   disk: 1024M
-  name: h2o
+  name: h3o
   path: webStarterApp.war
   domain: ng.bluemix.net
   mem: 512M

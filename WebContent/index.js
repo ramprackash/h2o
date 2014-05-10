@@ -5,7 +5,7 @@ function updateslider(year) {
 function dbRefresh() {
 
     var x;
-    var r=confirm("The database refresh may take up to eight minutes. Thank you for your patience.");
+    var r=confirm("The database refresh may take up to eight minutes. Think twice before you click OK.");
     if (r==true)
     {
         $.getJSON('/stations?initdb=1', function(data) { });
@@ -231,7 +231,7 @@ function re_initialize(year) {
     }
 
     var mapOptions = {
-        center: new google.maps.LatLng(36.407385,-115.392557), 
+        center: new google.maps.LatLng(37.965999603271484,-119.27200317382812), 
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         zoom: 7
     };

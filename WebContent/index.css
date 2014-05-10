@@ -2,21 +2,31 @@ html {
     height: 100%;
 }
 
+/*
 body {
     height: 100%;
     margin: 0;
     adding: 0;
     background-image: url(IMG/background.png);
 }
+    */
 
-#mymenu {
-    height: 5%;
-    text-align: center;
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    padding-top: 10px;
-    padding-bottom: 25px;
+#dbr {
+   background-color: #787878;
+   color: #660000;
 }
 
+#home {
+    position:fixed !important;
+    position:absolute;
+    top-margin: 10%;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+}
+
+/*
 #timeline_intro {
     color: #eee;
     color: rgba(255,255,255,0.75);
@@ -89,17 +99,18 @@ body {
     line-height: 5em;
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
+    */
 
 /* implementation of the map */
 #map_canvas {
-    height: 95%;
+    height: 800px;
     width: 85%;
     border: 2px solid;
     border-color: silver;
     margin-left: auto;
     margin-right: auto;
 }
-
+/*
 #markers {
     color: #eee;
     color: rgba(255,255,255,0.75);
@@ -111,8 +122,7 @@ body {
     line-height: 5em;
     padding-top: 25px;
 }    
-
-}
+*/
 
 #map_canvas img {
     max-width: none;
