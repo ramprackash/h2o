@@ -73,19 +73,29 @@ body {
 
 #api {
     
+	font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
+	font-size: .5em;
     margin-top: 25px;
+<<<<<<< HEAD
+=======
+    margin-left: auto;
+    margin-right: auto;
+    width:1444px;
+>>>>>>> FETCH_HEAD
     height: 77%;
     padding-top: 25px;
     padding-bottom: 25px;
     padding-left: 45px;
+<<<<<<< HEAD
 
     overflow: auto;
 
+=======
+	overflow: auto;
+>>>>>>> FETCH_HEAD
     background-color: #FFFFFF;
-    font-size: .8em;
-    letter-spacing: .25em;
-    line-height: 5em;
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.0em;
+    line-height: 2em;
 
 }
 

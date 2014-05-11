@@ -4,7 +4,7 @@
 <head>
     <link href="index.css" rel="stylesheet" type="text/css">
     <script src=
-    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&amp;sensor=false"
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false"
     type="text/javascript"></script>
     <script src="https://www.google.com/jsapi" type="text/javascript"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
@@ -46,10 +46,10 @@ google.load('visualization', '1.0', {'packages':['corechart']});
                     var val = $('#slider1').val();
                     output  = $('#output');
 
-                    output.html("<b>Currently showing map for " + val);
+                    output.html("Currently showing map for " + val);
 
                     $('#slider1').change(function(){
-                        output.html("<b>Currently showing map for "+this.value);
+                        output.html("Currently showing map for "+this.value);
                         });
                     });
     </script>

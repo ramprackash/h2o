@@ -231,7 +231,7 @@ function re_initialize(year) {
     }
 
     var mapOptions = {
-        center: new google.maps.LatLng(39.33300018310547,-120.25), 
+        center: new google.maps.LatLng(36.407385,-115.392557), 
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         zoom: 7
     };
@@ -256,7 +256,11 @@ function re_initialize(year) {
             var monthNames = [ "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ];
 
             var d = new Date();
-            var resturl = '/stationhistory?id='+stn.id+'&upto=1&year='+year+'&month='+monthNames[d.getMonth()];
+            if (year == "2014") {
+                var resturl = '/stationhistory?id='+stn.id+'&upto=1&year='+year;
+            } else {
+                var resturl = '/stationhistory?id='+stn.id+'&upto=1&year='+year+'&month='+monthNames[d.getMonth()];
+            }
 
             $.getJSON(resturl, function(data) {
                 var pinColorBlue = "90C1F2";
