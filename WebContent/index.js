@@ -1,5 +1,60 @@
+function setCookie(c_name,value,exdays) {
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+    document.cookie=c_name + "=" + c_value;
+}
+
+function getCookie(c_name) {
+    var i,x,y,ARRcookies=document.cookie.split(";");
+    for (i=0;i<ARRcookies.length;i++)
+    {
+      x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+      y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+      x=x.replace(/^\s+|\s+$/g,"");
+      if (x==c_name)
+        {
+        return unescape(y);
+        }
+      }
+    return "";
+}
+
+// as a suggestion you could use the event listener to save the state when zoom changes or drag ends
+function tilesLoaded() {
+    google.maps.event.clearListeners(map, 'tilesloaded');
+    google.maps.event.addListener(map, 'zoom_changed', saveMapState);
+    google.maps.event.addListener(map, 'dragend', saveMapState);
+}   
+
+
+// functions below
+
+function saveMapState() { 
+    var mapZoom=map.getZoom(); 
+    var mapCentre=map.getCenter(); 
+    var mapLat=mapCentre.lat(); 
+    var mapLng=mapCentre.lng(); 
+    var cookiestring=mapLat+"_"+mapLng+"_"+mapZoom; 
+    setCookie("myMapCookie",cookiestring, 30); 
+} 
+
+
+function loadMapState(map) { 
+    var gotCookieString=getCookie("myMapCookie"); 
+    var splitStr = gotCookieString.split("_");
+    var savedMapLat = parseFloat(splitStr[0]);
+    var savedMapLng = parseFloat(splitStr[1]);
+    var savedMapZoom = parseFloat(splitStr[2]);
+    if ((!isNaN(savedMapLat)) && (!isNaN(savedMapLng)) && (!isNaN(savedMapZoom))) {
+        map.setCenter(new google.maps.LatLng(savedMapLat,savedMapLng));
+        map.setZoom(savedMapZoom);
+    }
+}
+
+
 function updateslider(year) {
-    re_initialize(year);
+    re_initialize(year, 1);
 }
 
 function dbRefresh() {
@@ -215,10 +270,10 @@ function markeraction(map, marker, stn) {
 }
 
 function initialize() {
-   re_initialize("2014");
+   re_initialize("2014", 0);
 }
                 
-function re_initialize(year) {
+function re_initialize(year, center) {
     if (window.localStorage.getItem("testinit") == "1") {
         $.getJSON('/stations?initstatus=1', function(data) {
             if (data.initstatus < 2) {
@@ -233,10 +288,31 @@ function re_initialize(year) {
     var mapOptions = {
         center: new google.maps.LatLng(36.407385,-115.392557), 
         mapTypeId: google.maps.MapTypeId.TERRAIN,
-        zoom: 7
+        zoom: 6
     };
     var map = new google.maps.Map(document.getElementById("map_canvas"),
             mapOptions);
+    //google.maps.event.addListener(map, 'tilesloaded', tilesLoaded);
+    google.maps.event.addListener(map, 'zoom_changed', function () {
+        var mapZoom=map.getZoom(); 
+        var mapCentre=map.getCenter(); 
+        var mapLat=mapCentre.lat(); 
+        var mapLng=mapCentre.lng(); 
+        var cookiestring=mapLat+"_"+mapLng+"_"+mapZoom; 
+        setCookie("myMapCookie",cookiestring, 30); 
+    });
+    google.maps.event.addListener(map, 'dragend', function () {
+        var mapZoom=map.getZoom(); 
+        var mapCentre=map.getCenter(); 
+        var mapLat=mapCentre.lat(); 
+        var mapLng=mapCentre.lng(); 
+        var cookiestring=mapLat+"_"+mapLng+"_"+mapZoom; 
+        setCookie("myMapCookie",cookiestring, 30); 
+    });
+
+    if (center) {
+        loadMapState(map);
+    }
 
     var pinColorRed = "FE7569";
     var pinImageRed = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorRed,
