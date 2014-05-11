@@ -20,31 +20,33 @@ body {
 #timeline_intro {
     color: #eee;
     color: rgba(255,255,255,0.75);
-    text-transform: uppercase;
+    
     text-decoration: none;
-    font-size: .7em;
-    letter-spacing: .25em;
-    height: 5em;
-    line-height: 5em;
+    
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
 #timeline_slider {
-    letter-spacing: .25em;
-    height: 5em;
-    line-height: 5em;
     color: #eee;
     color: rgba(255,255,255,0.75);
-    font-size: .7em;
-    letter-spacing: .25em;
-    height: 5em;
-    line-height: 5em;
-}
+    
+    text-decoration: none;
+    
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+} 
 
 #map_container {
     height: 80%;
 }
 
+
 #container {
+    height: 80%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#apicontainer {
     height: 80%;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -94,7 +96,7 @@ body {
     overflow: auto;
 
 
-	overflow: auto;
+	
 
     background-color: #FFFFFF;
     font-size: 1.0em;
@@ -105,13 +107,10 @@ body {
 #output {
     color: #eee;
     color: rgba(255,255,255,0.75);
-    text-transform: uppercase;
     text-decoration: none;
-    font-size: .7em;
-    letter-spacing: .25em;
-    height: 5em;
-    line-height: 5em;
+    
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    margin-bottom: 5px;
 }
 
 /* implementation of the map */
