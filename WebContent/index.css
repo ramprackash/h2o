@@ -44,6 +44,16 @@ body {
     height: 80%;
     padding-top: 25px;
     padding-bottom: 25px;
+    color: #eee;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .7em;
+    letter-spacing: .25em;
+    line-height: 5em;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-align: center;
+
 }
 
 #contacts {
@@ -64,11 +74,12 @@ body {
 #api {
     
     margin-top: 25px;
-    
     height: 77%;
     padding-top: 25px;
     padding-bottom: 25px;
     padding-left: 45px;
+
+    overflow: auto;
 
     background-color: #FFFFFF;
     font-size: .8em;
