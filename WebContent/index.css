@@ -40,6 +40,10 @@ body {
     line-height: 5em;
 }
 
+#map_container {
+    height: 80%;
+}
+
 #container {
     height: 80%;
     padding-top: 25px;
@@ -131,8 +135,6 @@ body {
     line-height: 5em;
     padding-top: 25px;
 }    
-
-}
 
 #map_canvas img {
     max-width: none;
