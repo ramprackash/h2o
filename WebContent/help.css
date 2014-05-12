@@ -1,9 +1,14 @@
 #grid{
 
+	padding-top: 20px;
+
 	margin-top: 20px;
-	margin-bottom: 23px;
+	
+	margin-right: 28px;
 
+	height: 80%;
 
+	padding-bottom: 9px;
 	
 
 
@@ -59,7 +64,7 @@ ul.rig li {
 	-webkit-box-sizing: border-box;
 }
 ul.rig li img {
-	max-width: 55%;
+	max-width: 60%;
 	height: auto;
 	
 }
@@ -77,7 +82,7 @@ ul.rig.columns-2 li {
 }
 /* class for 3 columns */
 ul.rig.columns-3 li {
-	width: 30%; /* this value + 2.5 should = 33% */
+	width: 40%; /* this value + 2.5 should = 33% */
 }
 /* class for 4 columns */
 ul.rig.columns-4 li {
