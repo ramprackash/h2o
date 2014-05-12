@@ -24,6 +24,7 @@ body {
     text-decoration: none;
     
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    padding-top: 5px;
 }
 
 #timeline_slider {
@@ -36,7 +37,7 @@ body {
 } 
 
 #map_container {
-    height: 80%;
+    height: 65%;
 }
 
 
@@ -110,7 +111,7 @@ body {
     text-decoration: none;
     
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 /* implementation of the map */
