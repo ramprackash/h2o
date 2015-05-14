@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <script src=
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&sensor=false"
+    type="text/javascript"></script>
+    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="index.js" type="text/javascript"></script>
+    <script type="text/javascript">
+google.load('visualization', '1.0', {'packages':['corechart']});
+            google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+    <title>Map</title>
+</head>
+
+<body>
+    <div id="mymenu">
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+
+                <li><a href="map.html">Map</a></li>
+
+                <li><a href="help.html">Resources</a></li>
+
+                <li><a href="contact.html">Contact</a></li>
+
+                <li><a href="api.html">REST API</a></li>
+
+                <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB
+                Refresh</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <center>
+    <div id="timeline_intro"><p>
+        Use the slider to set the timeline for the waterlevel map</p><br>
+    </div><script type="text/javascript">
+        $(function(){
+                    var val = $('#slider1').val();
+                    output  = $('#output');
+
+                    output.html("Currently showing map for " + val);
+
+                    $('#slider1').change(function(){
+                        output.html("Currently showing map for "+this.value);
+                        });
+                    });
+    </script>
+
+    <div id="timeline_slider">
+        2004 <input id="slider1" max="2014" min="2004" onchange=
+        "updateslider(this.value)" step="1" style="width: 400px;" type="range"
+        value="2014"> 2014<br>
+    </div>
+
+    <div id="output"></div></center>
+
+    <div id="map_container">
+        <div id="map_canvas"></div>
+        <center>
+        <div id="markers">
+            <p><img src=
+            "http://chart.apis.google.com/chart?chst=d_map_pin_letter&amp;chld=%E2%80%A2|FE7569">
+            reservoirs where measured level for the year was lower than the
+            average for that month.</p>
+
+            <p><img src=
+            "http://chart.apis.google.com/chart?chst=d_map_pin_letter&amp;chld=%E2%80%A2|90C1F2">
+            reservoirs where measured level for the year was higher than the
+            average for that month.</p><br> </center>
+        </div>
+    </div>
+</body>
+</html>

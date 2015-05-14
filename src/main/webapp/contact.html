@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <link href="flexslider.css" rel="stylesheet" type="text/css">
+
+    <script src=
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlu85kqiD-r4vVOHxOwRWrRUnh1N-l9o&amp;sensor=false"
+    type="text/javascript"></script>
+    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="index.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        google.load('visualization', '1.0', {'packages':['corechart']});
+            google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script src="modernizr.js"></script>
+
+    <title>Contacts</title>
+</head>
+
+<body>
+    <div id="mymenu">
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+
+                <li><a href="map.html">Map</a></li>
+
+                <li><a href="help.html">Resources</a></li>
+
+                <li><a href="contact.html">Contact</a></li>
+
+                <li><a href="api.html">REST API</a></li>
+
+                <li><a href="#" id="dbrefresh" onclick="dbRefresh()">DB
+                Refresh</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div id="contacts">
+        <center>
+
+        <p>Ramprakash Ram Mohan (ramprakash.rammohan@sjsu.edu) </p>
+        <p>Meet Dave (meet.dave@sjsu.edu) </p>
+        <p>Amey More (amey.more@sjsu.edu) </p>
+        <p>Jay Mehta (jay.mehta@sjsu.edu) </p>
+        <p>Rutul Amin (rutulvyomesh.amin@sjsu.edu)</p>
+        </center>
+
+
+       
+   </div>
+
+    <div id="myfooter">
+        Team 20
+    </div>
+   
+  
+    
+  
+  <script type="text/javascript">
+    $(function(){
+      SyntaxHighlighter.all();
+    });
+    $(window).load(function(){
+      $('.flexslider').flexslider({
+        animation: "slide",
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+      });
+    });
+    </script>
+  
+</body>
+</html>
