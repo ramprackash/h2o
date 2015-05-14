@@ -59,7 +59,7 @@ public class Stations extends HttpServlet {
 
     private void updateStationsFromDB() 
     {
-        DB db = this.mongo.getDB("db");
+        DB db = this.mongo.getDB("drought");
         DBCollection stationTable = db.getCollection("stations");
         DBCursor cursor = stationTable.find();
         this.stationArray = new ArrayList<Station>();
@@ -143,7 +143,7 @@ public class Stations extends HttpServlet {
             if (this.mongo == null) {
                 this.mongo = new MongoClient(new MongoClientURI(connURL));
             }
-            db = this.mongo.getDB("db");
+            db = this.mongo.getDB("drought");
             boolean stationTableExists = db.collectionExists("stations");
             boolean stationHistoryTableExists = db.collectionExists("stationHistory");
             if (stationHistoryTableExists && stationTableExists && !forceRefresh) {
@@ -251,6 +251,7 @@ public class Stations extends HttpServlet {
 
     private static String getServiceURI() throws Exception 
     {
+	    /*
         String jdbcurl = null;
         String envServices = null;
         String vcapServices = System.getenv("VCAP_SERVICES");
@@ -262,6 +263,13 @@ public class Stations extends HttpServlet {
             jdbcurl.substring(jdbcurl.indexOf("mon"), 
                               jdbcurl.lastIndexOf('\"'));
         return jdbcurl;
+	*/
+        String mongodbhost = System.getenv("OPENSHIFT_MONGODB_DB_HOST");
+        String mongodbport = System.getenv("OPENSHIFT_MONGODB_DB_PORT");
+        
+        return "mongodb://" + mongodbhost + mongodbport;
+
+
     }
 
     private void createDBEntries(String state, PrintWriter out)
@@ -269,7 +277,7 @@ public class Stations extends HttpServlet {
         int i = 0;
         DB db;
         try {
-            db = this.mongo.getDB("db");
+            db = this.mongo.getDB("drought");
             DBCollection stationTable = db.getCollection("stations");
             this.setInitProgress(0);
             for (Station st : this.stationArray) {
@@ -323,7 +331,7 @@ public class Stations extends HttpServlet {
     public void dumpDBEntries(PrintWriter out)
     {
         DB db;
-        db = this.mongo.getDB("db");
+        db = this.mongo.getDB("drought");
         DBCollection stationTable = db.getCollection("stations");
         DBCursor cursor = stationTable.find();
         try {
@@ -430,12 +438,12 @@ public class Stations extends HttpServlet {
         DB db = null;
         try {
             if (this.mongo != null) {
-                db = this.mongo.getDB("db");
+                db = this.mongo.getDB("drought");
             } else {
                 out.println("mongo is null. Initializing it now"); 
                 String connURL = getServiceURI();
                 this.mongo = new MongoClient(new MongoClientURI(connURL));
-                db = this.mongo.getDB("db");
+                db = this.mongo.getDB("drought");
             }
         } 
         catch (Exception e) {
